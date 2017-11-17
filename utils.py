@@ -1,5 +1,4 @@
 
-
 def depth_iter(element, tag=None):
     stack = []
     stack.append(iter([element]))

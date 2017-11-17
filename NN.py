@@ -17,6 +17,7 @@ class Generic1NNClassifier(KNeighborsClassifier):
     def predict(self, X):
 
         pred = []
+        S=[]
 
         for Xi in X:
 
@@ -34,6 +35,8 @@ class Generic1NNClassifier(KNeighborsClassifier):
             else:
                 best_match_idx = numpy.argmax(similarities)
 
-            pred.append(self.classes_[best_match_idx])
 
-        return numpy.array(pred)
+            pred.append(self.classes_[best_match_idx])
+            S.append(similarities)
+
+        return numpy.array(pred),S

@@ -9,6 +9,7 @@ import numpy as np
 import xml.etree.ElementTree as xmlTree
 from collections import ChainMap
 import utils 
+import random
 
 
 class Graph(object):
@@ -231,6 +232,51 @@ class Graph(object):
             x.append(v['attr_name'])
 
         return np.array(x)
+
+# C'est moche mais ça fait le taf :
+
+def build_one_tree_dataset_from_xml(path,classe,max_depth):
+    onlyfiles = utils.read_files(path)
+    data=[]
+    for f in onlyfiles :
+        G=Graph()
+        G.build_Xml_tree(path+'/'+f,max_depth)
+        data.append((G,classe)) 
+
+    return data
+
+def split_train_test(dataset,ratio):
+    x_train=random.sample(dataset,int(ratio*len(dataset)))
+    x_test=list(set(dataset).difference(set(x_train)))
+
+    return x_train,x_test
+
+def build_train_test(list_tree_dataset,ratios): #beurk
+    x_train=[]
+    y_train=[]
+    x_test=[]
+    y_test=[]
+    if type(ratios)==float:
+        for dataset in list_tree_dataset:
+            train,test=split_train_test(dataset,ratios)
+            x_train.append(train[0])
+            y_train.append(train[1])
+            x_test.append(test[0])
+            y_test.append(test[1])
+
+    else :
+        k=0
+        for dataset in list_tree_dataset:
+            train,test=split_train_test(dataset,ratios[k])
+            k=k+1
+            x_train.append(train[0])
+            y_train.append(train[1])
+            x_test.append(test[0])
+            y_test.append(test[1])
+
+    return x_train,x_test,y_train,y_test
+
+
 
 
 
