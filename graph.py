@@ -103,32 +103,6 @@ class Graph(object):
                     paths.append(p)
         return paths
     
-    def vertex_degree(self, vertex):
-        """ The degree of a vertex is the number of edges connecting
-            it, i.e. the number of adjacent vertices. Loops are counted 
-            double, i.e. every occurence of vertex in the list 
-            of adjacent vertices. """ 
-        adj_vertices =  self.graph_dict[vertex]
-        degree = len(adj_vertices) + adj_vertices.count(vertex)
-        return degree
-    
-    def find_isolated_vertices(self):
-        """ returns a list of isolated vertices. """
-        graph = self.graph_dict
-        isolated = []
-        for vertex in graph:
-            print(isolated, vertex)
-            if not graph[vertex]:
-                isolated += [vertex]
-        return isolated
-    
-    def degree_sequence(self):
-        """ calculates the degree  : vertex degrees in non increasing order """
-        seq = []
-        for vertex in self.graph_dict:
-            seq.append(self.vertex_degree(vertex))
-        seq.sort(reverse=True)
-        return tuple(seq)
 
     def smallest_path(self,G,start_vertex, end_vertex,method='nx'):
         if method=='nx':
@@ -182,7 +156,6 @@ class Graph(object):
         plt.show()
 
     def rename_nx_graph(self,G,renamedict):
-
         return nx.relabel_nodes(G,renamedict)
 
     def create_graph_dict_xml(self,xml_root,depth,max_depth): #mettre dans la classe pour enlever le graph.
@@ -190,18 +163,14 @@ class Graph(object):
         
         if (depth ==0) : #at root
             self.add_vertex(xml_root) 
-            self.add_one_attribute(xml_root,utils.extract_attribute(xml_root))
-        
+            self.add_one_attribute(xml_root,utils.extract_attribute(xml_root))       
         
         if depth < max_depth:
             
-            for xml_child in xml_root:
-                
+            for xml_child in xml_root:                
                 self.add_vertex(xml_child)
-                self.add_one_attribute(xml_child,utils.extract_attribute(xml_child))
-                
-                self.add_edge((xml_child,xml_root))
-                
+                self.add_one_attribute(xml_child,utils.extract_attribute(xml_child))                
+                self.add_edge((xml_child,xml_root))                
                 self.create_graph_dict_xml(xml_child,depth+1,max_depth)
 
     def hierarchy_pos(self,G, root, width=1., vert_gap = 0.2, vert_loc = 0, xcenter = 0.5, 
@@ -243,22 +212,26 @@ class Graph(object):
         renamedict=dict(ChainMap(*l))
         self.create_graph_dict_xml(xml_root=xml_root,depth=0,max_depth=max_depth)
         self.add_nodes_and_edges_from_graph_dict()
-
-        self.G_plot=self.rename_nx_graph(self.nx_graph,renamedict)
-
-
-
+        self.nx_graph=self.rename_nx_graph(self.nx_graph,renamedict)
+        #print('warn : nx_graph was renamed')
+        self.construct_tree()
 
 
+    def return_leaves(self,T):
+        return [x for x in T.nodes_iter() if T.out_degree(x)==0 and T.in_degree(x)==1]
+
+    def construct_tree(self):
+        self.tree=nx.bfs_tree(self.nx_graph, 1) #create trees
+
+    def leaves_matrix_attr(self):
+        leaves=self.return_leaves(self.tree)
+        d=dict((k, v) for k, v in self.nx_graph.node.items() if k in set(leaves))
+        x=[]
+        for k,v in d.items():
+            x.append(v['attr_name'])
+
+        return np.array(x)
 
 
-    def __str__(self):
-        res = "vertices: "
-        for k in self.graph_dict:
-            res += str(k) + " "
-        res += "\nedges: "
-        for edge in self.__generate_edges():
-            res += str(edge) + " "
-        return res
 
 

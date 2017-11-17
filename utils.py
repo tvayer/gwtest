@@ -1,3 +1,5 @@
+
+
 def depth_iter(element, tag=None):
     stack = []
     stack.append(iter([element]))
@@ -32,3 +34,11 @@ def blockshaped(arr, nrows, ncols):
     return (arr.reshape(h//nrows, nrows, -1, ncols)
                .swapaxes(1,2)
                .reshape(-1, nrows, ncols))
+
+def read_files(mypath):
+    from os import listdir
+    from os.path import isfile, join
+
+    return [f for f in listdir(mypath) if isfile(join(mypath, f))]
+
+
