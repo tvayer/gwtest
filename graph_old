@@ -26,11 +26,11 @@ class Graph(object):
 
     def nodes(self):
         """ returns the vertices of a graph """
-        return self.nx_graph.nodes()
+        return list(self.graph_dict.keys())
 
     def edges(self):
         """ returns the edges of a graph """
-        return self.nx_graph.edges()
+        return self.__generate_edges()
 
     def add_vertex(self, vertex):
         """ If the vertex "vertex" is not in 
@@ -38,11 +38,8 @@ class Graph(object):
             list as a value is added to the dictionary. 
             Otherwise nothing has to be done. 
         """
-        if vertex not in self.nodes():
-            self.nx_graph.add_node(vertex)
-
-    def add_nodes(self, nodes):
-        self.nx_graph.add_nodes_from(nodes)
+        if vertex not in self.graph_dict:
+            self.graph_dict[vertex] = []
 
     def add_edge(self, edge):
         """ assumes that edge is of type set, tuple or list; 
@@ -50,15 +47,10 @@ class Graph(object):
         """
         edge = set(edge)
         (vertex1, vertex2) = tuple(edge)
-        self.nx_graph.add_edge(vertex1,vertex2)
-
-    def add_one_attribute(self,node,attr,attr_name='feature'):
-        self.nx_graph.add_node(node,attr_name=attr)
-
-    def add_attibutes(self,attributes):
-        attributes=dict(attributes)
-        for node,attr in attributes.items():
-            self.add_one_attribute(node,attr)
+        if vertex1 in self.graph_dict:
+            self.graph_dict[vertex1].append(vertex2)
+        else:
+            self.graph_dict[vertex1] = [vertex2]
 
     def binary_link(self,node1,node2):
         self.add_vertex(str(node1)+'bilink'+str(node2)) 
@@ -67,38 +59,62 @@ class Graph(object):
         edge = set((node2,str(node1)+'bilink'+str(node2)))
         self.add_edge(edge)
 
-    def recursive_binary_link(self,nodes):
-        double_list=nodes
-        while len(double_list)>=2:
-            oldnodes=self.nodes()
-            for double in utils.chunks(double_list, 2):
-                self.binary_link(double[0],double[1])
-            newnodes=self.nodes()
-            double_list=list(set(newnodes).difference(set(oldnodes)))
-
-
-
     def add_gaussian_to_leaves(self,leaves,a,b):
         d=dict((leaf,np.random.uniform(a,b)) for leaf in leaves)
         self.add_attibutes(d)
 
-    def create_gaussian_leaves(self,names,a,b):
-        self.add_nodes(names)
-        self.add_gaussian_to_leaves(names,a,b)
 
-    def create_classes_gaussian_leaves(self,nLeaves,classes):
-        names=[0]
-        classe,a,b=classes      
-        names=[classe+str(i+names[::-1][0]) for i in range(nLeaves)] #pour que les noms soient distincts
-        self.create_gaussian_leaves(names,a,b)
-
-    def find_leaf(self,beginwith): #assez nulle comme recherche
-        nodes=self.nodes()
-        returnlist=list()
-        for nodename in nodes :
-            if str(nodename).startswith(beginwith):
-                returnlist.append(nodename)
-        return returnlist
+    def __generate_edges(self):
+        """ A static method generating the edges of the 
+            graph "graph". Edges are represented as sets 
+            with one (a loop back to the vertex) or two 
+            vertices 
+        """
+        edges = []
+        for vertex in self.graph_dict:
+            for neighbour in self.graph_dict[vertex]:
+                if {neighbour, vertex} not in edges:
+                    edges.append({vertex, neighbour})
+        return edges
+    
+    def find_path(self, start_vertex, end_vertex, path=None):
+        """ find a path from start_vertex to end_vertex 
+            in graph """
+        if path == None:
+            path = []
+        graph = self.graph_dict
+        path = path + [start_vertex]
+        if start_vertex == end_vertex:
+            return path
+        if start_vertex not in graph:
+            return None
+        for vertex in graph[start_vertex]:
+            if vertex not in path:
+                extended_path = self.find_path(vertex, 
+                                               end_vertex, 
+                                               path)
+                if extended_path: 
+                    return extended_path
+        return None
+    
+    def find_all_paths(self, start_vertex, end_vertex, path=[]):
+        """ find all paths from start_vertex to 
+            end_vertex in graph """
+        graph = self.graph_dict 
+        path = path + [start_vertex]
+        if start_vertex == end_vertex:
+            return [path]
+        if start_vertex not in graph:
+            return []
+        paths = []
+        for vertex in graph[start_vertex]:
+            if vertex not in path:
+                extended_paths = self.find_all_paths(vertex, 
+                                                     end_vertex, 
+                                                     path)
+                for p in extended_paths: 
+                    paths.append(p)
+        return paths
     
 
     def smallest_path(self,G,start_vertex, end_vertex,method='nx'):
@@ -113,6 +129,15 @@ class Graph(object):
     def vertex_distance(self,G,start_vertex, end_vertex,method='nx'):
 
         return len(self.smallest_path(G,start_vertex, end_vertex,method))-1
+
+    def add_nodes_and_edges_from_graph_dict(self):
+        tupleEdges=[tuple(dic) for dic in self.edges()]
+        badIndices=[i for i, v in enumerate(tupleEdges) if len(v) == 1]
+        for idx in badIndices:
+            tupleEdges[idx]=tupleEdges[idx]+tupleEdges[idx]        
+        self.nx_graph.add_edges_from([tuple(dic) for dic in tupleEdges])
+        self.nx_graph.add_nodes_from(nodes=self.nodes())
+
 
     def distance_matrix(self,G,nodeOfInterest=None):
         if nodeOfInterest==None :
@@ -130,6 +155,14 @@ class Graph(object):
         C=C+C.T
 
         return C
+
+    def add_one_attribute(self,node,attr,attr_name='feature'):
+        self.nx_graph.add_node(node,attr_name=attr)
+
+    def add_attibutes(self,attributes):
+        attributes=dict(attributes)
+        for node,attr in attributes.items():
+            self.add_one_attribute(node,attr)
 
     def display_graph(self,G,**kwargs):
         # Ne marche pas avec les selfs loops
@@ -186,19 +219,14 @@ class Graph(object):
         else:
             return pos
 
-    def basic_rename(self,rootiterable):
-        l=[{b:a} for a,b,c in utils.depth_iter(rootiterable)]
-        renamedict=dict(ChainMap(*l))
-        self.nx_graph=self.rename_nx_graph(self.nx_graph,renamedict)
-
-
     def build_Xml_tree(self,file_name,max_depth=5):
         xml_tree = xmlTree.parse(file_name)
         xml_root = xml_tree.getroot()
-
+        l=[{b:a} for a,b,c in utils.depth_iter(xml_root)]
+        renamedict=dict(ChainMap(*l))
         self.create_graph_dict_xml(xml_root=xml_root,depth=0,max_depth=max_depth)
-        #self.add_nodes_and_edges_from_graph_dict()
-        self.basic_rename(xml_root)
+        self.add_nodes_and_edges_from_graph_dict()
+        self.nx_graph=self.rename_nx_graph(self.nx_graph,renamedict)
         #print('warn : nx_graph was renamed')
         self.construct_tree()
 
@@ -219,28 +247,6 @@ class Graph(object):
         return np.array(x)
 
 # C'est moche mais ça fait le taf :
-
-def generate_binary_gaussian_tree(highpowerof2):#il faut que nlowLeaves soit une puissance de 2
-    graph=Graph()
-    randint=np.random.randint(2,high=highpowerof2)
-    nlowLeaves=2**randint
-    groupe=('A',0,5)
-    graph.create_classes_gaussian_leaves(nlowLeaves,groupe)
-    groupe=('B',5,10)
-    graph.create_classes_gaussian_leaves(nlowLeaves,groupe)
-    noeudB=graph.find_leaf('B')
-    noeudA=graph.find_leaf('A')            
-    k=0
-    for noeud in noeudA:
-        graph.binary_link(noeud,noeudB[k])
-        k=k+1
-    otherNode=list(set(graph.nodes()).difference(set(noeudB).union(set(noeudA))))
-    graph.recursive_binary_link(otherNode)
-
-    return graph
-
-
-
 
 def build_one_tree_dataset_from_xml(path,classe,max_depth):
     onlyfiles = utils.read_files(path)

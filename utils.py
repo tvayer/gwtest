@@ -13,6 +13,11 @@ def depth_iter(element, tag=None):
             if tag == None or e.tag == tag:
                 yield (nodenumber,e, stack.__len__()-1) 
 
+def chunks(l, n):
+    """Yield successive n-sized chunks from l."""
+    for i in range(0, len(l), n):
+        yield l[i:i + n]
+
 def extract_xml_attribute(string, start='[', stop=']'):
     return string[string.index(start)+1:string.index(stop)]
 
