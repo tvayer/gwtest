@@ -39,6 +39,12 @@ def blockshaped(arr, nrows, ncols):
                .swapaxes(1,2)
                .reshape(-1, nrows, ncols))
 
+def dict_argmax(d):
+    return max(d, key=d.get)
+
+def dict_argmin(d):
+    return min(d, key=d.get)
+
 def read_files(mypath):
     from os import listdir
     from os.path import isfile, join

@@ -3,11 +3,12 @@ import numpy
 from pathos.multiprocessing import ProcessingPool as Pool
 
 class Generic1NNClassifier(KNeighborsClassifier):
-    def __init__(self, similarity_measure, the_lower_the_better=False,parallel=False):
+    def __init__(self, similarity_measure, the_lower_the_better=True,parallel=False,verbose=False):
         KNeighborsClassifier.__init__(self, n_neighbors=1)
         self.local_metric = similarity_measure
         self.the_lower_the_better = the_lower_the_better
         self.parallel=parallel
+        self.verbose=verbose
 
     def fit(self, X, y):
         self.classes_ = y
@@ -22,8 +23,16 @@ class Generic1NNClassifier(KNeighborsClassifier):
         for Xi in X:
 
             if self.parallel==False:
-
-                similarities = [self.local_metric(X_train, Xi) for X_train in self._fit_X]
+                if self.verbose==True:
+                    similarities=[]
+                    k=0
+                    for  X_train in self._fit_X:
+                        similarities.append(self.local_metric(X_train, Xi))
+                        if k % 20 == 0:
+                            print(k)
+                        k=k+1
+                else:
+                    similarities = [self.local_metric(X_train, Xi) for X_train in self._fit_X]
 
             else :
                 pool=Pool(3)
