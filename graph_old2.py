@@ -21,7 +21,6 @@ class Graph(object):
             an empty dictionary will be used
         """
         self.nx_graph=nx.Graph()
-        self.name='A graph as no name'
 
     def nodes(self,**kwargs):
         """ returns the vertices of a graph """
@@ -114,20 +113,20 @@ class Graph(object):
         return returnlist
     
 
-    def smallest_path(self,start_vertex, end_vertex):
+    def smallest_path(self,G,start_vertex, end_vertex):
 
         try:
-            shtpath=nx.shortest_path(self.nx_graph,start_vertex,end_vertex)
+            shtpath=nx.shortest_path(G,start_vertex,end_vertex)
             return shtpath
         except nx.exception.NetworkXNoPath:
-            raise NoPathException('No path between two nodes, graph name : ',self.name)
+            raise Exception('No path between two nodes, graph name : ',G)
 
         
 
-    def attribute_distance(self,node1,node2):
+    def attribute_distance(self,G,node1,node2):
 
-        attr1=self.nx_graph.node[node1]
-        attr2=self.nx_graph.node[node2]
+        attr1=G.node[node1]
+        attr2=G.node[node2]
         if 'attr_name' in attr1 and 'attr_name' in attr2:
 
             x1=np.array(attr1['attr_name']).reshape(-1,1)
@@ -137,28 +136,28 @@ class Graph(object):
 
 
 
-    def all_attribute_distance(self,nodeOfInterest=None): #un peu beaucoup vener
+    def all_attribute_distance(self,G,nodeOfInterest=None): #un peu beaucoup vener
 
         if nodeOfInterest==None :
-            v=self.nx_graph.nodes()
+            v=G.nodes()
         else:
-            v=list(set(self.nx_graph.nodes()).intersection(set(nodeOfInterest)))
+            v=list(set(G.nodes()).intersection(set(nodeOfInterest)))
         pairs = list(itertools.combinations(v,2))
         dist_dic=dict()
 
         for node1,node2 in pairs:
  
-            dist_dic[(node1,node2)]=self.attribute_distance(node1,node2)
+            dist_dic[(node1,node2)]=self.attribute_distance(G,node1,node2)
 
         self.dist_dic=dist_dic
         self.max_attr_distance=max(list(dist_dic.values()))
 
-    def vertex_distance(self,start_vertex, end_vertex,method='shortest_path'): #faire une classe distance entre les noeuds
+    def vertex_distance(self,G,start_vertex, end_vertex,method='shortest_path'): #faire une classe distance entre les noeuds
 
         if method=='shortest_path':
-            return len(self.smallest_path(start_vertex, end_vertex))-1
+            return len(self.smallest_path(G,start_vertex, end_vertex))-1
         if method=='weighted_shortest_path':
-            sp=len(self.smallest_path(start_vertex, end_vertex))-1
+            sp=len(self.smallest_path(G,start_vertex, end_vertex))-1
             if (start_vertex,end_vertex) in self.dist_dic:
                 d=self.dist_dic[(start_vertex,end_vertex)]
             elif (end_vertex,start_vertex) in self.dist_dic:
@@ -169,28 +168,28 @@ class Graph(object):
             return sp*d/maxd
 
 
-    def distance_matrix(self,nodeOfInterest=None,method='shortest_path'):
+    def distance_matrix(self,G,nodeOfInterest=None,method='shortest_path'):
         if nodeOfInterest==None :
-            v=self.nx_graph.nodes()
+            v=G.nodes()
         else:
-            v=list(set(self.nx_graph.nodes()).intersection(set(nodeOfInterest)))
+            v=list(set(G.nodes()).intersection(set(nodeOfInterest)))
         self.map_node=dict([i for i in enumerate(v)]) # à créer ailleurs 
         self.inv_map_node = {v: k for k, v in self.map_node.items()} # à créer ailleurs 
         pairs = list(itertools.combinations(v,2))
         C=np.zeros((len(v),len(v)))
         for (s,e) in pairs:
             if method=='weighted_shortest_path':
-                self.all_attribute_distance(nodeOfInterest)
-            distance=self.vertex_distance(s,e,method=method)
+                self.all_attribute_distance(G,nodeOfInterest)
+            distance=self.vertex_distance(G,s,e,method=method)
             C[self.inv_map_node[s]-1,self.inv_map_node[e]-1]=distance
         #print(C)
         C=C+C.T
 
         return C
 
-    def display_graph(self,**kwargs):
+    def display_graph(self,G,**kwargs):
         # Ne marche pas avec les selfs loops
-        nx.draw_networkx(self.nx_graph,**kwargs)
+        nx.draw_networkx(G,**kwargs)
         plt.show()
 
 
@@ -286,10 +285,6 @@ class Graph(object):
         return np.array(x)
 
 
-class NoPathException(Exception):
-    pass
-
-
 # C'est moche mais ça fait le taf :
 
 def generate_binary_uniform_tree(maxdepth,coupling='cross',a=0,b=5,c=5,d=10):#il faut que nlowLeaves soit une puissance de 2
@@ -338,66 +333,27 @@ def build_one_tree_dataset_from_xml(path,classe,max_depth):
 
     return data
 
-def build_one_enzyme_graph(path,file):
-
-    with open(path+file) as f:
-        sections = list(utils.per_section(f,lambda x:x.startswith('#')))
-        graph=Graph()
-        k=1
-        for label in sections[0]:
-            graph.add_vertex(k)
-            graph.add_one_attribute(k,label)
-            k=k+1
-        k=1
-        for edges in sections[1]:
-            for node in edges.split(','):
-                if node!='':
-                    graph.add_edge((k,int(node)))
-            k=k+1
-        classe=int(sections[2][0])
-        graph.name=file
-
-    return graph,classe
-
-def build_one_mutag_graph(path,file):
-
-    with open(path+file) as f:
-        sections = list(utils.per_section(f,lambda x:x.startswith('#')))
-        graph=Graph()
-        k=1
-        for label in sections[0]:
-            graph.add_vertex(k)
-            graph.add_one_attribute(k,label)
-            k=k+1
-        k=1
-        for edges in sections[1]:           
-            node1=edges.split(',')[0]
-            node2=edges.split(',')[1]
-            graph.add_edge((int(node1),int(node2)))
-            k=k+1
-        classe=int(sections[2][0])
-        graph.name=file
-
-    return graph,classe
-
-def build_mutag_dataset(path):
-
-    data=[]
-    y=[]
-    for file in utils.read_files(path):
-        graph,classe=build_one_mutag_graph(path,file)
-        data.append(graph)
-        y.append(classe)
-
-    return list(zip(data,y))
-
-
 def build_enzyme_dataset(path):
 
     data=[]
     y=[]
     for file in utils.read_files(path):
-        graph,classe=build_one_enzyme_graph(path,file)
+        with open(path+file) as f:
+            #print(file)
+            sections = list(utils.per_section(f,lambda x:x.startswith('#')))
+            graph=Graph()
+            k=1
+            for label in sections[0]:
+                graph.add_vertex(k)
+                graph.add_one_attribute(k,label)
+                k=k+1
+            k=1
+            for edges in sections[1]:
+                for node in edges.split(','):
+                    if node!='':
+                        graph.add_edge((k,int(node)))
+                k=k+1
+            classe=int(sections[2][0])
         data.append(graph)
         y.append(classe)
 

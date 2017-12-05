@@ -16,20 +16,21 @@ def wgw(G, C1, C2, p, q, loss_fun, epsilon,alpha,
     C1 = np.asarray(C1, dtype=np.float64)
     C2 = np.asarray(C2, dtype=np.float64)
 
-    T = np.outer(p, q)  # Initialization
+    #T = np.outer(p, q)  # Initialization
+    T = np.eye(len(p), len(q))
 
     cpt = 0
     err = 1
 
     if loss_fun == 'square_loss':
         def f1(a):
-            return (a**2) / 2
+            return (a**2) 
         def f2(b):
-            return (b**2) / 2    
+            return (b**2)    
         def h1(a):
             return a    
         def h2(b):
-            return b
+            return 2*b
     elif loss_fun == 'kl_loss':
         def f1(a):
             return a * np.log(a + 1e-15) - a    
@@ -39,8 +40,10 @@ def wgw(G, C1, C2, p, q, loss_fun, epsilon,alpha,
             return a    
         def h2(b):
             return np.log(b + 1e-15)
-        
-    constC = np.dot(f1(C1),p).reshape(len(p),1)*np.ones(len(q))+np.dot(f2(C2),q).reshape(len(q),1)*np.ones(len(p))
+
+    constC1=np.dot(np.dot(f1(C1),p.reshape(-1,1)),np.ones(len(q)).reshape(1,-1))
+    constC2=np.dot(np.ones(len(p)).reshape(-1,1),np.dot(q.reshape(1,-1),f2(C2).T))
+    constC=constC1+constC2
     hC1 = h1(C1)
     hC2 = h2(C2)
         

@@ -51,4 +51,14 @@ def read_files(mypath):
 
     return [f for f in listdir(mypath) if isfile(join(mypath, f))]
 
-
+def per_section(it, is_delimiter=lambda x: x.isspace()):
+    ret = []
+    for line in it:
+        if is_delimiter(line):
+            if ret:
+                yield ret  # OR  ''.join(ret)
+                ret = []
+        else:
+            ret.append(line.rstrip())  # OR  ret.append(line)
+    if ret:
+        yield ret

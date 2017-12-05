@@ -1,6 +1,10 @@
 from sklearn.neighbors import KNeighborsClassifier
-import numpy
+import numpy,os,sys
+module_path = os.path.abspath(os.path.join('/Users/vayer/Documents/OT/Python/GW_tests/'))
+if module_path not in sys.path:
+    sys.path.append(module_path)
 from pathos.multiprocessing import ProcessingPool as Pool
+import ot_distances 
 
 class Generic1NNClassifier(KNeighborsClassifier):
     def __init__(self, similarity_measure, the_lower_the_better=True,parallel=False,verbose=False):
@@ -49,3 +53,22 @@ class Generic1NNClassifier(KNeighborsClassifier):
             S.append(similarities)
 
         return numpy.array(pred),S
+
+class Tree_OT_1NN_Classifier(Generic1NNClassifier):
+
+    def __init__(self,alpha,epsilon,the_lower_the_better=True,parallel=False,verbose=False,method='shortest_path',features_metric='sqeuclidean'):
+        similarity_measure=ot_distances.wgw_tree_distance(alpha,epsilon,method,features_metric)
+        Generic1NNClassifier.__init__(self,similarity_measure,the_lower_the_better,parallel,verbose)
+
+
+class Graph_OT_1NN_Classifier(Generic1NNClassifier):
+
+    def __init__(self,alpha,epsilon,the_lower_the_better=True,parallel=False,verbose=False,method='shortest_path',features_metric='sqeuclidean'):
+        similarity_measure=ot_distances.wgw_graph_distance(alpha,epsilon,method,features_metric)
+        Generic1NNClassifier.__init__(self,similarity_measure,the_lower_the_better,parallel,verbose)
+
+
+
+
+
+
