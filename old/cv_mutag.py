@@ -9,7 +9,7 @@ import NN,time
 from sklearn.model_selection import StratifiedKFold
 
 path='./mutag/'
-dataset=build_mutag_dataset(path)
+dataset=list(build_mutag_dataset(path))
 A,B=split_train_test(dataset,0.8)
 x_train,y_train=zip(*A)
 x_test,y_test=zip(*B)

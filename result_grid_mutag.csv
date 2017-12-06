@@ -1,0 +1,19 @@
+CV Nb_splits :  2
+Tuned tuned_parameters :  [{'features_metric': ['dirac'], 'method': ['shortest_path'], 'normalize_distance': [False, True], 'epsilon': [10.0], 'alpha': [10.0]}]
+--------------------------
+--------------------------
+
+Best parameters set found on development set:
+
+{'features_metric': 'dirac', 'method': 'shortest_path', 'normalize_distance': False, 'epsilon': 10.0, 'alpha': 10.0}
+
+--------------------------
+--------------------------
+Grid scores on development set:
+
+0.521 (+/-0.522) for {'features_metric': 'dirac', 'method': 'shortest_path', 'normalize_distance': False, 'epsilon': 10.0, 'alpha': 10.0}
+0.500 (+/-0.330) for {'features_metric': 'dirac', 'method': 'shortest_path', 'normalize_distance': True, 'epsilon': 10.0, 'alpha': 10.0}
+
+--------------------------
+--------------------------
+All Time : 1359.279757976532

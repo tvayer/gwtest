@@ -2,3 +2,7 @@
 *.pyc
 
 *.txt
+
+*.graph
+
+\.ipynb_checkpoints/

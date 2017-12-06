@@ -9,7 +9,7 @@ import NN,time
 from sklearn.model_selection import StratifiedKFold
 
 path='./enzymes/'
-dataset=build_enzyme_dataset(path)
+dataset=list(build_enzyme_dataset(path))
 A,B=split_train_test(dataset,0.8)
 x_train,y_train=zip(*A)
 x_test,y_test=zip(*B)

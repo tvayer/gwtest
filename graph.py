@@ -389,7 +389,7 @@ def build_mutag_dataset(path):
         data.append(graph)
         y.append(classe)
 
-    return list(zip(data,y))
+    return zip(data,y)
 
 
 def build_enzyme_dataset(path):
