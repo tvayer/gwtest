@@ -1,6 +1,8 @@
 """ A Python Class
 A simple Python graph class, demonstrating the essential 
 facts and functionalities of graphs.
+
+Compatible networkx VERSION 2
 """
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -12,6 +14,8 @@ import utils
 import random
 import ot
 import WGW_2 as wgw
+from collections import defaultdict
+
 
 class Graph(object):
 
@@ -23,9 +27,16 @@ class Graph(object):
         self.nx_graph=nx.Graph()
         self.name='A graph as no name'
 
-    def nodes(self,**kwargs):
+    def __eq__(self, other) : 
+        #print('yo method')
+        return self.__dict__ == other.__dict__
+
+    def __hash__(self):
+        return hash(str(self))
+
+    def nodes(self):
         """ returns the vertices of a graph """
-        return self.nx_graph.nodes(kwargs)
+        return dict(self.nx_graph.nodes())
 
     def edges(self):
         """ returns the edges of a graph """
@@ -71,7 +82,7 @@ class Graph(object):
         # ajouter l'attribut moyen ?
         x1=np.array(self.get_attr(node1)['attr_name'])
         x2=np.array(self.get_attr(node2)['attr_name'])
-        self.nx_graph.node[str(node1)+'bilink'+str(node2)]={'attr_name':(x1+x2)/2}
+        self.nx_graph.node[str(node1)+'bilink'+str(node2)].update({'attr_name':(x1+x2)/2})
 
     def iterative_binary_link(self,nodes,maxIter=None):
         double_list=nodes
@@ -156,20 +167,28 @@ class Graph(object):
     def vertex_distance(self,start_vertex, end_vertex,method='shortest_path'): #faire une classe distance entre les noeuds
 
         if method=='shortest_path':
-            return len(self.smallest_path(start_vertex, end_vertex))-1
+            try :
+                dist=len(self.smallest_path(start_vertex, end_vertex))-1
+            except NoPathException:
+                dist=float('inf')
+            return dist
         if method=='weighted_shortest_path':
-            sp=len(self.smallest_path(start_vertex, end_vertex))-1
-            if (start_vertex,end_vertex) in self.dist_dic:
-                d=self.dist_dic[(start_vertex,end_vertex)]
-            elif (end_vertex,start_vertex) in self.dist_dic:
-                d=self.dist_dic[(end_vertex,start_vertex)]
-            else :
-                d=np.nan
-            maxd=self.max_attr_distance
-            return sp*d/maxd
+            try :
+                sp=len(self.smallest_path(start_vertex, end_vertex))-1
+                if (start_vertex,end_vertex) in self.dist_dic:
+                    d=self.dist_dic[(start_vertex,end_vertex)]
+                elif (end_vertex,start_vertex) in self.dist_dic:
+                    d=self.dist_dic[(end_vertex,start_vertex)]
+                else :
+                    d=np.nan
+                maxd=self.max_attr_distance
+                dist=sp*d/maxd
+            except NoPathException:
+                dist = float('inf')
+            return dist
 
 
-    def distance_matrix(self,nodeOfInterest=None,method='shortest_path'):
+    def distance_matrix(self,nodeOfInterest=None,method='shortest_path',changeInf=True,maxvaluemulti=10):
         if nodeOfInterest==None :
             v=self.nx_graph.nodes()
         else:
@@ -178,13 +197,16 @@ class Graph(object):
         self.inv_map_node = {v: k for k, v in self.map_node.items()} # à créer ailleurs 
         pairs = list(itertools.combinations(v,2))
         C=np.zeros((len(v),len(v)))
+        if method=='weighted_shortest_path':
+            self.all_attribute_distance(nodeOfInterest)
         for (s,e) in pairs:
-            if method=='weighted_shortest_path':
-                self.all_attribute_distance(nodeOfInterest)
             distance=self.vertex_distance(s,e,method=method)
             C[self.inv_map_node[s]-1,self.inv_map_node[e]-1]=distance
         #print(C)
         C=C+C.T
+
+        if changeInf==True:
+            C[C==float('inf')]=maxvaluemulti*np.max(C) # à voir
 
         return C
 
@@ -224,7 +246,7 @@ class Graph(object):
             pos = {root:(xcenter,vert_loc)}
         else:
             pos[root] = (xcenter, vert_loc)
-        neighbors = G.neighbors(root)
+        neighbors = list(G.neighbors(root))
         if parent != None:   #this should be removed for directed graphs.
             neighbors.remove(parent)  #if directed, then parent not in neighbors.
         if len(neighbors)!=0:
@@ -263,7 +285,8 @@ class Graph(object):
 
 
     def return_leaves(self,T):
-        return [x for x in T.nodes_iter() if T.out_degree(x)==0 and T.in_degree(x)==1]
+        #return [x for x in T.nodes_iter() if T.out_degree(x)==0 and T.in_degree(x)==1]
+        return [x for x in T.nodes if T.out_degree(x)==0 and T.in_degree(x)==1]
 
     def construct_tree(self):
         self.tree=nx.bfs_tree(self.nx_graph, 1) #create trees
@@ -402,6 +425,127 @@ def build_enzyme_dataset(path):
         y.append(classe)
 
     return list(zip(data,y))
+
+def node_labels_dic(path,name):
+    node_dic=dict()
+    with open(path+name) as f:
+        sections = list(utils.per_section(f))
+        k=1
+        for elt in sections[0]:
+            node_dic[k]=int(elt)
+            k=k+1
+    return node_dic
+
+def node_attr_dic(path,name):
+    node_dic=dict()
+    with open(path+name) as f:
+        sections = list(utils.per_section(f))
+        k=1
+        for elt in sections[0]:
+            node_dic[k]=[float(x) for x in elt.split(',')]
+            k=k+1
+    return node_dic
+
+def graph_label_list(path,name):
+    graphs=[]
+    with open(path+name) as f:
+        sections = list(utils.per_section(f))
+        k=1
+        for elt in sections[0]:
+            graphs.append((k,int(elt)))
+            k=k+1
+    return graphs
+def graph_indicator(path,name):
+    data_dict = defaultdict(list)
+    with open(path+name) as f:
+        sections = list(utils.per_section(f))
+        k=1
+        for elt in sections[0]:
+            data_dict[int(elt)].append(k)
+            k=k+1
+    return data_dict
+
+def compute_adjency(path,name):
+    adjency= defaultdict(list)
+    with open(path+name) as f:
+        sections = list(utils.per_section(f))
+        for elt in sections[0]:
+            adjency[int(elt.split(',')[0])].append(int(elt.split(',')[1]))
+    return adjency
+
+
+def build_NCI1_dataset(path):
+    node_dic=node_labels_dic(path,'NCI1_node_labels.txt')
+    graphs=graph_label_list(path,'NCI1_graph_labels.txt')
+    adjency=compute_adjency(path,'NCI1_A.txt')
+    data_dict=graph_indicator(path,'NCI1_graph_indicator.txt')
+    data=[]
+    for i in graphs:
+        g=Graph()
+        for node in data_dict[i[0]]:
+            g.name=i[0]
+            g.add_vertex(node)
+            g.add_one_attribute(node,node_dic[node])
+            for node2 in adjency[node]:
+                g.add_edge((node,node2))
+        data.append((g,i[1]))
+
+    return data
+
+
+def build_reddit_dataset(path):
+    graphs=graph_label_list(path,'REDDIT-MULTI-5K_graph_labels.txt')
+    adjency=compute_adjency(path,'REDDIT-MULTI-5K_A.txt')
+    data_dict=graph_indicator(path,'REDDIT-MULTI-5K_graph_indicator.txt')
+    data=[]
+    for i in graphs:
+        g=Graph()
+        for node in data_dict[i[0]]:
+            g.name=i[0]
+            g.add_vertex(node)
+            for node2 in adjency[node]:
+                g.add_edge((node,node2))
+        data.append((g,i[1]))
+
+    return data
+
+def build_MUTAG_dataset(path):
+    graphs=graph_label_list(path,'MUTAG_graph_labels.txt')
+    adjency=compute_adjency(path,'MUTAG_A.txt')
+    data_dict=graph_indicator(path,'MUTAG_graph_indicator.txt')
+    node_dic=node_labels_dic(path,'MUTAG_node_labels.txt') # ya aussi des nodes attributes ! The fuck ?
+    data=[]
+    for i in graphs:
+        g=Graph()
+        for node in data_dict[i[0]]:
+            g.name=i[0]
+            g.add_vertex(node)
+            g.add_one_attribute(node,node_dic[node])
+            for node2 in adjency[node]:
+                g.add_edge((node,node2))
+        data.append((g,i[1]))
+
+    return data
+
+def build_ENZYMES_dataset(path):
+    graphs=graph_label_list(path,'ENZYMES_graph_labels.txt')
+    adjency=compute_adjency(path,'ENZYMES_A.txt')
+    data_dict=graph_indicator(path,'ENZYMES_graph_indicator.txt')
+    node_dic=node_attr_dic(path,'ENZYMES_node_attributes.txt') # ya aussi des nodes attributes ! The fuck ?
+    data=[]
+    for i in graphs:
+        g=Graph()
+        for node in data_dict[i[0]]:
+            g.name=i[0]
+            g.add_vertex(node)
+            g.add_one_attribute(node,node_dic[node])
+            for node2 in adjency[node]:
+                g.add_edge((node,node2))
+        data.append((g,i[1]))
+
+    return data
+
+
 
 def split_train_test(dataset,ratio):
     x_train=random.sample(dataset,int(ratio*len(dataset)))

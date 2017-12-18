@@ -50,6 +50,8 @@ def wgw(G, C1, C2, p, q, loss_fun, epsilon,alpha,
     log_struct={}
     log_struct['err']=[]
     log_struct['GW_dist']=[]
+    log_struct['cpt']=0
+
     while (err > tol and cpt < max_iter):
         tens = constC-np.dot(hC1, T).dot(hC2.T)
         Cost = G+alpha*tens        
@@ -61,6 +63,7 @@ def wgw(G, C1, C2, p, q, loss_fun, epsilon,alpha,
         
             if log:
                 log_struct['err'].append(err)
+                log_struct['cpt']=cpt
 
             if verbose:
                 print('{:5d}|{:8e}|'.format(cpt, err))

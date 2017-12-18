@@ -1,0 +1,68 @@
+CV Nb_splits :  5
+Data size :  188
+Tuned tuned_parameters :  [{'normalize_distance': [False, True], 'epsilon': [0.01, 12.5075, 25.005000000000003, 37.502499999999998, 50.0], 'ratio': [0.01, 0.33250000000000002, 0.65500000000000003, 0.97750000000000004, 1.3], 'features_metric': ['dirac'], 'method': ['shortest_path']}]
+--------------------------
+--------------------------
+
+Best parameters set found on development set:
+
+{'normalize_distance': True, 'epsilon': 37.502499999999998, 'ratio': 0.33250000000000002, 'features_metric': 'dirac', 'method': 'shortest_path'}
+
+--------------------------
+--------------------------
+Grid scores on development set:
+
+0.378 (+/-0.070) for {'normalize_distance': False, 'epsilon': 0.01, 'ratio': 0.01, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.367 (+/-0.161) for {'normalize_distance': False, 'epsilon': 0.01, 'ratio': 0.33250000000000002, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.309 (+/-0.072) for {'normalize_distance': False, 'epsilon': 0.01, 'ratio': 0.65500000000000003, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.324 (+/-0.101) for {'normalize_distance': False, 'epsilon': 0.01, 'ratio': 0.97750000000000004, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.426 (+/-0.101) for {'normalize_distance': False, 'epsilon': 0.01, 'ratio': 1.3, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.314 (+/-0.086) for {'normalize_distance': True, 'epsilon': 0.01, 'ratio': 0.01, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.340 (+/-0.061) for {'normalize_distance': True, 'epsilon': 0.01, 'ratio': 0.33250000000000002, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.255 (+/-0.074) for {'normalize_distance': True, 'epsilon': 0.01, 'ratio': 0.65500000000000003, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.197 (+/-0.077) for {'normalize_distance': True, 'epsilon': 0.01, 'ratio': 0.97750000000000004, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.160 (+/-0.101) for {'normalize_distance': True, 'epsilon': 0.01, 'ratio': 1.3, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.372 (+/-0.076) for {'normalize_distance': False, 'epsilon': 12.5075, 'ratio': 0.01, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.660 (+/-0.121) for {'normalize_distance': False, 'epsilon': 12.5075, 'ratio': 0.33250000000000002, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.681 (+/-0.145) for {'normalize_distance': False, 'epsilon': 12.5075, 'ratio': 0.65500000000000003, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.511 (+/-0.057) for {'normalize_distance': False, 'epsilon': 12.5075, 'ratio': 0.97750000000000004, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.521 (+/-0.129) for {'normalize_distance': False, 'epsilon': 12.5075, 'ratio': 1.3, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.457 (+/-0.051) for {'normalize_distance': True, 'epsilon': 12.5075, 'ratio': 0.01, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.739 (+/-0.042) for {'normalize_distance': True, 'epsilon': 12.5075, 'ratio': 0.33250000000000002, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.457 (+/-0.126) for {'normalize_distance': True, 'epsilon': 12.5075, 'ratio': 0.65500000000000003, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.234 (+/-0.066) for {'normalize_distance': True, 'epsilon': 12.5075, 'ratio': 0.97750000000000004, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.229 (+/-0.070) for {'normalize_distance': True, 'epsilon': 12.5075, 'ratio': 1.3, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.378 (+/-0.075) for {'normalize_distance': False, 'epsilon': 25.005000000000003, 'ratio': 0.01, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.676 (+/-0.158) for {'normalize_distance': False, 'epsilon': 25.005000000000003, 'ratio': 0.33250000000000002, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.676 (+/-0.156) for {'normalize_distance': False, 'epsilon': 25.005000000000003, 'ratio': 0.65500000000000003, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.505 (+/-0.076) for {'normalize_distance': False, 'epsilon': 25.005000000000003, 'ratio': 0.97750000000000004, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.521 (+/-0.129) for {'normalize_distance': False, 'epsilon': 25.005000000000003, 'ratio': 1.3, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.452 (+/-0.077) for {'normalize_distance': True, 'epsilon': 25.005000000000003, 'ratio': 0.01, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.771 (+/-0.052) for {'normalize_distance': True, 'epsilon': 25.005000000000003, 'ratio': 0.33250000000000002, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.457 (+/-0.156) for {'normalize_distance': True, 'epsilon': 25.005000000000003, 'ratio': 0.65500000000000003, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.234 (+/-0.066) for {'normalize_distance': True, 'epsilon': 25.005000000000003, 'ratio': 0.97750000000000004, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.229 (+/-0.070) for {'normalize_distance': True, 'epsilon': 25.005000000000003, 'ratio': 1.3, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.463 (+/-0.244) for {'normalize_distance': False, 'epsilon': 37.502499999999998, 'ratio': 0.01, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.686 (+/-0.173) for {'normalize_distance': False, 'epsilon': 37.502499999999998, 'ratio': 0.33250000000000002, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.676 (+/-0.156) for {'normalize_distance': False, 'epsilon': 37.502499999999998, 'ratio': 0.65500000000000003, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.505 (+/-0.076) for {'normalize_distance': False, 'epsilon': 37.502499999999998, 'ratio': 0.97750000000000004, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.516 (+/-0.142) for {'normalize_distance': False, 'epsilon': 37.502499999999998, 'ratio': 1.3, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.489 (+/-0.146) for {'normalize_distance': True, 'epsilon': 37.502499999999998, 'ratio': 0.01, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.787 (+/-0.048) for {'normalize_distance': True, 'epsilon': 37.502499999999998, 'ratio': 0.33250000000000002, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.463 (+/-0.164) for {'normalize_distance': True, 'epsilon': 37.502499999999998, 'ratio': 0.65500000000000003, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.234 (+/-0.066) for {'normalize_distance': True, 'epsilon': 37.502499999999998, 'ratio': 0.97750000000000004, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.229 (+/-0.070) for {'normalize_distance': True, 'epsilon': 37.502499999999998, 'ratio': 1.3, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.527 (+/-0.225) for {'normalize_distance': False, 'epsilon': 50.0, 'ratio': 0.01, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.681 (+/-0.175) for {'normalize_distance': False, 'epsilon': 50.0, 'ratio': 0.33250000000000002, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.676 (+/-0.156) for {'normalize_distance': False, 'epsilon': 50.0, 'ratio': 0.65500000000000003, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.511 (+/-0.091) for {'normalize_distance': False, 'epsilon': 50.0, 'ratio': 0.97750000000000004, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.516 (+/-0.142) for {'normalize_distance': False, 'epsilon': 50.0, 'ratio': 1.3, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.516 (+/-0.164) for {'normalize_distance': True, 'epsilon': 50.0, 'ratio': 0.01, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.787 (+/-0.048) for {'normalize_distance': True, 'epsilon': 50.0, 'ratio': 0.33250000000000002, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.463 (+/-0.164) for {'normalize_distance': True, 'epsilon': 50.0, 'ratio': 0.65500000000000003, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.234 (+/-0.066) for {'normalize_distance': True, 'epsilon': 50.0, 'ratio': 0.97750000000000004, 'features_metric': 'dirac', 'method': 'shortest_path'}
+0.229 (+/-0.070) for {'normalize_distance': True, 'epsilon': 50.0, 'ratio': 1.3, 'features_metric': 'dirac', 'method': 'shortest_path'}
+
+--------------------------
+--------------------------
+All Time : 258013.74370121956

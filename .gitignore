@@ -6,3 +6,7 @@
 *.graph
 
 \.ipynb_checkpoints/
+
+UCR_TS_Archive_2015/yoga/
+
+UCR_TS_Archive_2015/Worms/

@@ -1,0 +1,40 @@
+CV Nb_splits :  5
+Number of tree :  100
+Max_depth : 3
+c,d : (20, 30)
+Tuned_parameters :  [{'method': ['weighted_shortest_path'], 'normalize_distance': [True, False], 'epsilon': [0.10000000000000001, 2.3111111111111109, 4.5222222222222213, 6.7333333333333325, 8.9444444444444429, 11.155555555555553, 13.366666666666665, 15.577777777777776, 17.788888888888888, 20.0]}]
+--------------------------
+--------------------------
+
+Best parameters set found on development set:
+
+{'method': 'weighted_shortest_path', 'normalize_distance': True, 'epsilon': 2.3111111111111109}
+
+--------------------------
+--------------------------
+Grid scores on development set:
+
+0.000 (+/-0.000) for {'method': 'weighted_shortest_path', 'normalize_distance': True, 'epsilon': 0.10000000000000001}
+0.000 (+/-0.000) for {'method': 'weighted_shortest_path', 'normalize_distance': False, 'epsilon': 0.10000000000000001}
+0.830 (+/-0.116) for {'method': 'weighted_shortest_path', 'normalize_distance': True, 'epsilon': 2.3111111111111109}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'normalize_distance': False, 'epsilon': 2.3111111111111109}
+0.785 (+/-0.183) for {'method': 'weighted_shortest_path', 'normalize_distance': True, 'epsilon': 4.5222222222222213}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'normalize_distance': False, 'epsilon': 4.5222222222222213}
+0.755 (+/-0.169) for {'method': 'weighted_shortest_path', 'normalize_distance': True, 'epsilon': 6.7333333333333325}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'normalize_distance': False, 'epsilon': 6.7333333333333325}
+0.600 (+/-0.205) for {'method': 'weighted_shortest_path', 'normalize_distance': True, 'epsilon': 8.9444444444444429}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'normalize_distance': False, 'epsilon': 8.9444444444444429}
+0.725 (+/-0.114) for {'method': 'weighted_shortest_path', 'normalize_distance': True, 'epsilon': 11.155555555555553}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'normalize_distance': False, 'epsilon': 11.155555555555553}
+0.685 (+/-0.133) for {'method': 'weighted_shortest_path', 'normalize_distance': True, 'epsilon': 13.366666666666665}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'normalize_distance': False, 'epsilon': 13.366666666666665}
+0.670 (+/-0.097) for {'method': 'weighted_shortest_path', 'normalize_distance': True, 'epsilon': 15.577777777777776}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'normalize_distance': False, 'epsilon': 15.577777777777776}
+0.665 (+/-0.081) for {'method': 'weighted_shortest_path', 'normalize_distance': True, 'epsilon': 17.788888888888888}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'normalize_distance': False, 'epsilon': 17.788888888888888}
+0.655 (+/-0.073) for {'method': 'weighted_shortest_path', 'normalize_distance': True, 'epsilon': 20.0}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'normalize_distance': False, 'epsilon': 20.0}
+
+--------------------------
+--------------------------
+All Time : 110884.18220949173

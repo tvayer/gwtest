@@ -1,0 +1,19 @@
+CV Nb_splits :  10
+Data size :  188
+Tuned tuned_parameters :  [{'features_metric': ['dirac']}]
+--------------------------
+--------------------------
+
+Best parameters set found on development set:
+
+{'features_metric': 'dirac'}
+
+--------------------------
+--------------------------
+Grid scores on development set:
+
+0.761 (+/-0.126) for {'features_metric': 'dirac'}
+
+--------------------------
+--------------------------
+All Time : 50.77192687988281

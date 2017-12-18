@@ -1,0 +1,180 @@
+CV Nb_splits :  5
+Number of tree in each class:  100
+Max_depth : 3
+c,d : (20, 30)
+Tuned_parameters :  [{'method': ['shortest_path', 'weighted_shortest_path'], 'epsilon': [0.01, 37.5075, 75.00500000000001, 112.50250000000001, 150.0], 'features_metric': ['sqeuclidean'], 'ratio': [0.001, 0.072285714285714286, 0.14357142857142857, 0.21485714285714286, 0.28614285714285714, 0.35742857142857143, 0.42871428571428571, 0.5], 'normalize_distance': [False, True]}]
+--------------------------
+--------------------------
+
+Best parameters set found on development set:
+
+{'method': 'shortest_path', 'epsilon': 0.01, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+
+--------------------------
+--------------------------
+Grid scores on development set:
+
+0.515 (+/-0.144) for {'method': 'shortest_path', 'epsilon': 0.01, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.620 (+/-0.136) for {'method': 'shortest_path', 'epsilon': 0.01, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.995 (+/-0.020) for {'method': 'shortest_path', 'epsilon': 0.01, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 0.01, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 0.01, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 0.01, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 0.01, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 0.01, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.515 (+/-0.081) for {'method': 'shortest_path', 'epsilon': 0.01, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.750 (+/-0.167) for {'method': 'shortest_path', 'epsilon': 0.01, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.990 (+/-0.040) for {'method': 'shortest_path', 'epsilon': 0.01, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 0.01, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 0.01, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 0.01, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 0.01, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 0.01, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.500 (+/-0.138) for {'method': 'weighted_shortest_path', 'epsilon': 0.01, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.775 (+/-0.077) for {'method': 'weighted_shortest_path', 'epsilon': 0.01, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 0.01, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 0.01, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 0.01, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 0.01, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 0.01, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 0.01, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.520 (+/-0.080) for {'method': 'weighted_shortest_path', 'epsilon': 0.01, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.925 (+/-0.045) for {'method': 'weighted_shortest_path', 'epsilon': 0.01, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 0.01, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 0.01, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 0.01, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 0.01, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 0.01, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 0.01, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.480 (+/-0.102) for {'method': 'shortest_path', 'epsilon': 37.5075, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.475 (+/-0.095) for {'method': 'shortest_path', 'epsilon': 37.5075, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 37.5075, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 37.5075, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.765 (+/-0.098) for {'method': 'shortest_path', 'epsilon': 37.5075, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 37.5075, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 37.5075, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 37.5075, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.505 (+/-0.020) for {'method': 'shortest_path', 'epsilon': 37.5075, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.515 (+/-0.060) for {'method': 'shortest_path', 'epsilon': 37.5075, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.995 (+/-0.020) for {'method': 'shortest_path', 'epsilon': 37.5075, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.810 (+/-0.133) for {'method': 'shortest_path', 'epsilon': 37.5075, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.985 (+/-0.060) for {'method': 'shortest_path', 'epsilon': 37.5075, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 37.5075, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 37.5075, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 37.5075, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.525 (+/-0.071) for {'method': 'weighted_shortest_path', 'epsilon': 37.5075, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.620 (+/-0.213) for {'method': 'weighted_shortest_path', 'epsilon': 37.5075, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.510 (+/-0.051) for {'method': 'weighted_shortest_path', 'epsilon': 37.5075, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 37.5075, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 37.5075, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 37.5075, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 37.5075, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 37.5075, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.480 (+/-0.227) for {'method': 'weighted_shortest_path', 'epsilon': 37.5075, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.570 (+/-0.153) for {'method': 'weighted_shortest_path', 'epsilon': 37.5075, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.990 (+/-0.024) for {'method': 'weighted_shortest_path', 'epsilon': 37.5075, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.965 (+/-0.040) for {'method': 'weighted_shortest_path', 'epsilon': 37.5075, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.895 (+/-0.049) for {'method': 'weighted_shortest_path', 'epsilon': 37.5075, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.870 (+/-0.073) for {'method': 'weighted_shortest_path', 'epsilon': 37.5075, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.840 (+/-0.121) for {'method': 'weighted_shortest_path', 'epsilon': 37.5075, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.865 (+/-0.108) for {'method': 'weighted_shortest_path', 'epsilon': 37.5075, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.480 (+/-0.102) for {'method': 'shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.475 (+/-0.095) for {'method': 'shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.620 (+/-0.116) for {'method': 'shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.510 (+/-0.040) for {'method': 'shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.515 (+/-0.060) for {'method': 'shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.985 (+/-0.040) for {'method': 'shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.790 (+/-0.169) for {'method': 'shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.915 (+/-0.112) for {'method': 'shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.545 (+/-0.166) for {'method': 'weighted_shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.615 (+/-0.209) for {'method': 'weighted_shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.510 (+/-0.051) for {'method': 'weighted_shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.490 (+/-0.232) for {'method': 'weighted_shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.620 (+/-0.120) for {'method': 'weighted_shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.985 (+/-0.040) for {'method': 'weighted_shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.910 (+/-0.040) for {'method': 'weighted_shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.835 (+/-0.098) for {'method': 'weighted_shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.820 (+/-0.124) for {'method': 'weighted_shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.810 (+/-0.098) for {'method': 'weighted_shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.835 (+/-0.117) for {'method': 'weighted_shortest_path', 'epsilon': 75.00500000000001, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.480 (+/-0.102) for {'method': 'shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.475 (+/-0.095) for {'method': 'shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.590 (+/-0.140) for {'method': 'shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.510 (+/-0.040) for {'method': 'shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.515 (+/-0.060) for {'method': 'shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.990 (+/-0.024) for {'method': 'shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.785 (+/-0.172) for {'method': 'shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.855 (+/-0.169) for {'method': 'shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.605 (+/-0.196) for {'method': 'weighted_shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.615 (+/-0.209) for {'method': 'weighted_shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.510 (+/-0.051) for {'method': 'weighted_shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.505 (+/-0.177) for {'method': 'weighted_shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.585 (+/-0.169) for {'method': 'weighted_shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.960 (+/-0.068) for {'method': 'weighted_shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.870 (+/-0.066) for {'method': 'weighted_shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.810 (+/-0.129) for {'method': 'weighted_shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.795 (+/-0.136) for {'method': 'weighted_shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.795 (+/-0.116) for {'method': 'weighted_shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.830 (+/-0.124) for {'method': 'weighted_shortest_path', 'epsilon': 112.50250000000001, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.480 (+/-0.102) for {'method': 'shortest_path', 'epsilon': 150.0, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.475 (+/-0.095) for {'method': 'shortest_path', 'epsilon': 150.0, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 150.0, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 150.0, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.565 (+/-0.108) for {'method': 'shortest_path', 'epsilon': 150.0, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 150.0, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 150.0, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 150.0, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.510 (+/-0.040) for {'method': 'shortest_path', 'epsilon': 150.0, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.515 (+/-0.060) for {'method': 'shortest_path', 'epsilon': 150.0, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 150.0, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.775 (+/-0.148) for {'method': 'shortest_path', 'epsilon': 150.0, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.815 (+/-0.163) for {'method': 'shortest_path', 'epsilon': 150.0, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 150.0, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 150.0, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+1.000 (+/-0.000) for {'method': 'shortest_path', 'epsilon': 150.0, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.580 (+/-0.166) for {'method': 'weighted_shortest_path', 'epsilon': 150.0, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.620 (+/-0.203) for {'method': 'weighted_shortest_path', 'epsilon': 150.0, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.510 (+/-0.051) for {'method': 'weighted_shortest_path', 'epsilon': 150.0, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 150.0, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 150.0, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 150.0, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 150.0, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.500 (+/-0.000) for {'method': 'weighted_shortest_path', 'epsilon': 150.0, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': False}
+0.495 (+/-0.193) for {'method': 'weighted_shortest_path', 'epsilon': 150.0, 'ratio': 0.001, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.605 (+/-0.086) for {'method': 'weighted_shortest_path', 'epsilon': 150.0, 'ratio': 0.072285714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.940 (+/-0.068) for {'method': 'weighted_shortest_path', 'epsilon': 150.0, 'ratio': 0.14357142857142857, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.845 (+/-0.080) for {'method': 'weighted_shortest_path', 'epsilon': 150.0, 'ratio': 0.21485714285714286, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.800 (+/-0.126) for {'method': 'weighted_shortest_path', 'epsilon': 150.0, 'ratio': 0.28614285714285714, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.795 (+/-0.136) for {'method': 'weighted_shortest_path', 'epsilon': 150.0, 'ratio': 0.35742857142857143, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.795 (+/-0.139) for {'method': 'weighted_shortest_path', 'epsilon': 150.0, 'ratio': 0.42871428571428571, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+0.815 (+/-0.144) for {'method': 'weighted_shortest_path', 'epsilon': 150.0, 'ratio': 0.5, 'features_metric': 'sqeuclidean', 'normalize_distance': True}
+
+--------------------------
+--------------------------
+All Time : 98518.45227742195

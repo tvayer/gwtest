@@ -8,22 +8,30 @@ import copy
 import NN,time
 from sklearn.model_selection import GridSearchCV
 
-path='./mutag/'
-dataset=list(build_mutag_dataset(path))
+path='./data/MUTAG_2/'
+dataset=list(build_MUTAG_dataset(path))
 X,y=zip(*dataset)
+
+rationtraintest=0.8
+
+A,B=split_train_test(dataset,rationtraintest)
+x_train,y_train=zip(*A)
+x_test,y_test=zip(*B)
+
 dir_path='./'
-result_file='result_grid_mutag_WGW.csv'
+result_file='result_grid_mutag_WGW_parallel_1.csv'
 text_file = open(os.path.join(dir_path, result_file), 'w')
 
-n_splits=2
+n_splits=5
 start_time = time.time()
 
 print('CV Nb_splits : ', n_splits, file=text_file)
 print('Data size : ',len(X),file=text_file)
+print('Train/test : ',rationtraintest)
 
 
-tuned_parameters = [{'epsilon':list(np.linspace(10,15,1)),
-					 'alpha':list(np.linspace(10,15,1))
+tuned_parameters = [{'epsilon':list(np.linspace(0.01,50,5)),
+					 'ratio':list(np.linspace(0.01,1.3,5))
                      ,'method':['shortest_path']
                      ,'normalize_distance':[False,True]
                      ,'features_metric':['dirac']}]
@@ -31,10 +39,8 @@ tuned_parameters = [{'epsilon':list(np.linspace(10,15,1)),
 print('Tuned tuned_parameters : ',tuned_parameters,file=text_file) 
 
 wgw_1NN=NN.Graph_WGW_1NN_Classifier()
-clf = GridSearchCV(wgw_1NN, tuned_parameters, cv=n_splits,verbose=1)
-y2=np.array(y)
-y2[y2==-1]=0 #je sais pas si ça sert à quelque chose
-clf.fit(np.array(X).reshape(-1,1),y2)
+clf = GridSearchCV(wgw_1NN, tuned_parameters, cv=n_splits,scoring='accuracy',verbose=1,n_jobs=-1)
+clf.fit(np.array(x_train).reshape(-1,1),np.array(y_train))
 
 
 print('--------------------------', file=text_file)
@@ -59,5 +65,11 @@ print('', file=text_file)
 end_time = time.time()
 print('--------------------------', file=text_file)
 print('--------------------------', file=text_file)
+
+preds=clf.predict(np.array(x_test))
+nested_scores=np.sum(preds==np.array(y_test))/len(y_test)
+
+print('Score on test set with best_params_ : ',nested_scores,file=text_file)
+
 print('All Time :', end_time-start_time, file=text_file)
 
