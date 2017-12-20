@@ -8,7 +8,7 @@ import copy
 import NN,time
 from sklearn.model_selection import GridSearchCV
 
-nTree=200
+nTree=100
 depth=3
 c=20
 d=30
@@ -27,6 +27,7 @@ result_file='result_toytrees_GW_test.csv'
 text_file = open(os.path.join(dir_path, result_file), 'w')
 
 n_splits=5
+n_jobs=5
 start_time = time.time()
 
 print('CV Nb_splits : ', n_splits, file=text_file)
@@ -44,7 +45,7 @@ tuned_parameters = [{'epsilon':list(np.linspace(0.1,20,1))
 print('Tuned_parameters : ',tuned_parameters,file=text_file) 
 
 gw_1NN=NN.Tree_GW_1NN_Classifier(parallel=False)
-clf = GridSearchCV(gw_1NN, tuned_parameters, cv=n_splits,verbose=1,scoring='accuracy')
+clf = GridSearchCV(gw_1NN, tuned_parameters, cv=n_splits,verbose=1,scoring='accuracy',n_jobs=n_jobs)
 clf.fit(np.array(x_train).reshape(-1,1),np.array(y_train))
 
 

@@ -14,14 +14,15 @@ x_test,y_test=zip(*test)
 
 dir_path='./'
 result_file='result_grid_lightning_WGW_test.csv'
-n_jobs=-1
 text_file = open(os.path.join(dir_path, result_file), 'w')
 
 n_splits=5
+n_jobs=5
 start_time = time.time()
 
 print('CV Nb_splits : ', n_splits, file=text_file)
-print('Data size : ',len(x_train),file=text_file)
+print('Data train size : ',len(x_train),file=text_file)
+print('Data test size : ',len(x_train),file=text_file)
 print('N_jobs : ',n_jobs,file=text_file)
 
 

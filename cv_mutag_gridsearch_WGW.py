@@ -12,7 +12,7 @@ path='./data/MUTAG_2/'
 dataset=list(build_MUTAG_dataset(path))
 X,y=zip(*dataset)
 
-rationtraintest=0.8
+rationtraintest=0.9
 
 A,B=split_train_test(dataset,rationtraintest)
 x_train,y_train=zip(*A)
@@ -23,6 +23,7 @@ result_file='result_grid_mutag_WGW_parallel_1.csv'
 text_file = open(os.path.join(dir_path, result_file), 'w')
 
 n_splits=5
+n_jobs=-1
 start_time = time.time()
 
 print('CV Nb_splits : ', n_splits, file=text_file)
@@ -30,16 +31,16 @@ print('Data size : ',len(X),file=text_file)
 print('Train/test : ',rationtraintest)
 
 
-tuned_parameters = [{'epsilon':list(np.linspace(0.01,50,5)),
-					 'ratio':list(np.linspace(0.01,1.3,5))
+tuned_parameters = [{'epsilon':list(np.linspace(0.0001,2,8)),
+					 'alpha':list(np.linspace(0,0.99,8))
                      ,'method':['shortest_path']
-                     ,'normalize_distance':[False,True]
+                     ,'normalize_distance':[True]
                      ,'features_metric':['dirac']}]
 
 print('Tuned tuned_parameters : ',tuned_parameters,file=text_file) 
 
 wgw_1NN=NN.Graph_WGW_1NN_Classifier()
-clf = GridSearchCV(wgw_1NN, tuned_parameters, cv=n_splits,scoring='accuracy',verbose=1,n_jobs=-1)
+clf = GridSearchCV(wgw_1NN, tuned_parameters, cv=n_splits,scoring='accuracy',verbose=1,n_jobs=n_jobs)
 clf.fit(np.array(x_train).reshape(-1,1),np.array(y_train))
 
 

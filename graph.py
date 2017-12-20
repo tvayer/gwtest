@@ -15,6 +15,8 @@ import random
 import ot
 import WGW_2 as wgw
 from collections import defaultdict
+import time
+#from pathos.multiprocessing import ProcessingPool as Pool
 
 
 class Graph(object):
@@ -26,6 +28,13 @@ class Graph(object):
         """
         self.nx_graph=nx.Graph()
         self.name='A graph as no name'
+        self.log={}
+        self.log['pertoperdistance']=[]
+        self.log['pathtime']=[]
+        self.log['attridist']=[]
+        self.C=None
+        self.name_struct_dist='No struct name for now'
+
 
     def __eq__(self, other) : 
         #print('yo method')
@@ -126,9 +135,11 @@ class Graph(object):
     
 
     def smallest_path(self,start_vertex, end_vertex):
-
         try:
+            pathtime=time.time()
             shtpath=nx.shortest_path(self.nx_graph,start_vertex,end_vertex)
+            endpathtime=time.time()
+            self.log['pathtime'].append(endpathtime-pathtime)
             return shtpath
         except nx.exception.NetworkXNoPath:
             raise NoPathException('No path between two nodes, graph name : ',self.name)
@@ -188,27 +199,58 @@ class Graph(object):
             return dist
 
 
-    def distance_matrix(self,nodeOfInterest=None,method='shortest_path',changeInf=True,maxvaluemulti=10):
-        if nodeOfInterest==None :
-            v=self.nx_graph.nodes()
-        else:
-            v=list(set(self.nx_graph.nodes()).intersection(set(nodeOfInterest)))
-        self.map_node=dict([i for i in enumerate(v)]) # à créer ailleurs 
-        self.inv_map_node = {v: k for k, v in self.map_node.items()} # à créer ailleurs 
-        pairs = list(itertools.combinations(v,2))
-        C=np.zeros((len(v),len(v)))
-        if method=='weighted_shortest_path':
-            self.all_attribute_distance(nodeOfInterest)
-        for (s,e) in pairs:
-            distance=self.vertex_distance(s,e,method=method)
-            C[self.inv_map_node[s]-1,self.inv_map_node[e]-1]=distance
-        #print(C)
-        C=C+C.T
+    def distance_matrix(self,nodeOfInterest=None,method='shortest_path',changeInf=True,maxvaluemulti=10,force_recompute=False):
 
-        if changeInf==True:
-            C[C==float('inf')]=maxvaluemulti*np.max(C) # à voir
+        if (self.C is None) or force_recompute:
 
-        return C
+            if nodeOfInterest==None :
+                v=self.nx_graph.nodes()
+            else:
+                v=list(set(self.nx_graph.nodes()).intersection(set(nodeOfInterest)))
+            self.map_node=dict([i for i in enumerate(v)]) # à créer ailleurs 
+            self.inv_map_node = {v: k for k, v in self.map_node.items()} # à créer ailleurs 
+            pairs = list(itertools.combinations(v,2))
+            C=np.zeros((len(v),len(v)))
+            if method=='weighted_shortest_path':
+                start2=time.time()
+                self.all_attribute_distance(nodeOfInterest)
+                end2=time.time()
+                self.log['attridist'].append(end2-start2)
+            startboucle=time.time()
+
+            #def g(pair):
+                #s,e=pair
+                #dist=self.vertex_distance(s,e,method=method)
+                #C[self.inv_map_node[s]-1,self.inv_map_node[e]-1]=dist
+            #pool=Pool(3)
+            #pool.map(g,pairs)
+
+            for (s,e) in pairs: # cette boucle est longue : OUI
+                distance=self.vertex_distance(s,e,method=method)
+                C[self.inv_map_node[s]-1,self.inv_map_node[e]-1]=distance
+
+            endboucle=time.time()
+            self.log['pertoperdistance'].append(endboucle-startboucle)
+            #print(C)
+            C=C+C.T
+
+            if changeInf==True:
+                C[C==float('inf')]=maxvaluemulti*np.max(C) # à voir
+
+            self.C=C
+            self.name_struct_dist=method
+            #print('recompute ')
+
+            return self.C
+
+        else :
+
+            #print('no compute ')
+            #print('selfC',self.C)
+
+            return self.C
+
+            
 
     def display_graph(self,**kwargs):
         # Ne marche pas avec les selfs loops

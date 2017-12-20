@@ -8,11 +8,13 @@ Created on Thu Nov  9 09:15:28 2017
 
 import numpy as np
 
-import ot
+import ot,time
 
 
 def wgw(G, C1, C2, p, q, loss_fun, epsilon,alpha,
                        max_iter=1000, tol=1e-9, verbose=False, log=False):
+
+    allstar=time.time()
     C1 = np.asarray(C1, dtype=np.float64)
     C2 = np.asarray(C2, dtype=np.float64)
 
@@ -41,21 +43,28 @@ def wgw(G, C1, C2, p, q, loss_fun, epsilon,alpha,
         def h2(b):
             return np.log(b + 1e-15)
 
+    start=time.time()      
     constC1=np.dot(np.dot(f1(C1),p.reshape(-1,1)),np.ones(len(q)).reshape(1,-1))
     constC2=np.dot(np.ones(len(p)).reshape(-1,1),np.dot(q.reshape(1,-1),f2(C2).T))
     constC=constC1+constC2
     hC1 = h1(C1)
     hC2 = h2(C2)
+    end=time.time()
         
     log_struct={}
     log_struct['err']=[]
     log_struct['GW_dist']=[]
+    log_struct['sinkhorn']=[]
     log_struct['cpt']=0
+    log_struct['const']=end-start
 
     while (err > tol and cpt < max_iter):
         tens = constC-np.dot(hC1, T).dot(hC2.T)
-        Cost = G+alpha*tens        
+        Cost = G+alpha*tens
+        start=time.time()        
         T = ot.sinkhorn(p, q, Cost, epsilon, numItermax=100)
+        end=time.time()
+        log_struct['sinkhorn'].append(end-start)
 
         log_struct['GW_dist'].append(np.sum(T*Cost))
         if cpt>1:
@@ -70,6 +79,8 @@ def wgw(G, C1, C2, p, q, loss_fun, epsilon,alpha,
 
         cpt += 1
 
+    endall=time.time()
+    log_struct['all']=endall-allstar
     if log:
         return T, log_struct
     else:

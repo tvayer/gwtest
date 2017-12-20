@@ -4,17 +4,18 @@ import matplotlib.pyplot as pl
 import matplotlib
 import random
 import utils
-import seaborn as sns
+#import seaborn as sns
 import numpy as np
 import ot
 
 
 
-class TS():
+class TS(object):
     def __init__(self):
         self.name='A ts as no name'
         self.times=[]
         self.values=[]
+        self.C=None
 
     def __eq__(self, other) : 
         #print('yo method')
@@ -24,21 +25,28 @@ class TS():
         return hash(str(self))
 
     def plot_ts(self,show=False,**kwargs):
-    		pl.plot(self.values,**kwargs)
-    		if show==True:
-    		    pl.show()
+        pl.plot(self.values,**kwargs)
+        if show==True:
+           pl.show()
 
-    def distance_matrix(self,method='time',timedistance='sqeuclidean'):
+    def distance_matrix(self,method='time',timedistance='sqeuclidean',force_recompute=False):
 
-    	if method=='time':
-	    	if timedistance=='dirac':
-	    		f=lambda x,y: x==y
-	    		G = ot.dist(np.array(self.times).reshape(-1,1),np.array(self.times).reshape(-1,1),f)
-	    	else:
-	    		G = ot.dist(np.array(self.times).reshape(-1,1),np.array(self.times).reshape(-1,1),timedistance)
-	    		G = G/np.max(G)
+        if (self.C is None) or force_recompute:
 
-    		return G
+            if method=='time':
+                if timedistance=='dirac':
+                    f=lambda x,y: x==y
+                    C = ot.dist(np.array(self.times).reshape(-1,1),np.array(self.times).reshape(-1,1),f)
+                else :
+                    C  = ot.dist(np.array(self.times).reshape(-1,1),np.array(self.times).reshape(-1,1),timedistance)
+                self.C = C/np.max(C)
+
+                self.name_struct_dist=method
+
+                return self.C
+
+        else :
+            return self.C
 
     def plot_sample_ts_dataset(self,dataset,N=10,**kwargs):
 	    colors=color_list = pl.cm.Set3(np.linspace(0, 1, 12))
@@ -71,7 +79,17 @@ def create_ts(path,t='TRAIN'):
             k=k+1
     return data
 
-
+def create_random_ts(datasetsize=50,N=100,a=0,b=10):
+    data=[]
+    k=0
+    for i in range(datasetsize):      
+        ts=TS()
+        ts.values=list(np.random.uniform(low=a, high=b, size=(N,)))
+        ts.times=range(len(ts.values))
+        ts.name=str(k)
+        data.append((ts,0))
+        k=k+1
+    return data
 
 
 

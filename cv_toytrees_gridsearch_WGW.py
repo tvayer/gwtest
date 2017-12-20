@@ -26,6 +26,7 @@ result_file='result_toytrees_WGW_parallel_test.csv'
 text_file = open(os.path.join(dir_path, result_file), 'w')
 
 n_splits=5
+n_jobs=5
 start_time = time.time()
 
 print('CV Nb_splits : ', n_splits, file=text_file)
@@ -34,18 +35,20 @@ print('Max_depth :',depth,file=text_file)
 print('c,d :', (c,d),file=text_file)
 print('Train/test : ',rationtraintest)
 
+print('--------------------------', file=text_file)
+print('--------------------------', file=text_file)
 
 
 tuned_parameters = [{'epsilon':list(np.linspace(0.01,150,1)),
 					 'ratio':list(np.linspace(0.001,0.5,1))
-                     ,'method':['weighted_shortest_path']
+                     ,'method':['shortest_path','weighted_shortest_path']
                      ,'normalize_distance':[True]
                      ,'features_metric':['sqeuclidean']}]
 
 print('Tuned_parameters : ',tuned_parameters,file=text_file) 
 
 wgw_1NN=NN.Tree_WGW_1NN_Classifier(parallel=False)
-clf = GridSearchCV(wgw_1NN, tuned_parameters, cv=n_splits,verbose=1,scoring='accuracy',n_jobs=-1)
+clf = GridSearchCV(wgw_1NN, tuned_parameters, cv=n_splits,verbose=1,scoring='accuracy',n_jobs=n_jobs)
 clf.fit(np.array(x_train).reshape(-1,1),np.array(y_train))
 
 
