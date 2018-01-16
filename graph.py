@@ -38,10 +38,16 @@ class Graph(object):
 
     def __eq__(self, other) : 
         #print('yo method')
-        return self.__dict__ == other.__dict__
+        return self.nx_graph == other.nx_graph
 
     def __hash__(self):
         return hash(str(self))
+
+    def characterized(self):
+        if self.name!='A graph as no name':
+            return self.name
+        else:
+            return self
 
     def nodes(self):
         """ returns the vertices of a graph """
@@ -144,17 +150,26 @@ class Graph(object):
         except nx.exception.NetworkXNoPath:
             raise NoPathException('No path between two nodes, graph name : ',self.name)
 
-        
+    def reshaper(self,x):
+        try:
+            a=x.shape[1]
+            return x
+        except IndexError:
+            return x.reshape(-1,1)
+      
 
     def attribute_distance(self,node1,node2):
 
         attr1=self.nx_graph.node[node1]
         attr2=self.nx_graph.node[node2]
+        #print(node1)
+        #print(node2)
+
         if 'attr_name' in attr1 and 'attr_name' in attr2:
 
-            x1=np.array(attr1['attr_name']).reshape(-1,1)
-            x2=np.array(attr2['attr_name']).reshape(-1,1)
-            d=float(ot.dist(x1,x2)) #flemme
+            x1=self.reshaper(np.array(attr1['attr_name']))
+            x2=self.reshaper(np.array(attr2['attr_name']))
+            d=float(np.linalg.norm(x1-x2)) #PAR DEFAUT C'est la distance euclidienne entre les features 
         return d
 
 
@@ -173,17 +188,20 @@ class Graph(object):
             dist_dic[(node1,node2)]=self.attribute_distance(node1,node2)
 
         self.dist_dic=dist_dic
+        #print('OKAY SIR')
         self.max_attr_distance=max(list(dist_dic.values()))
 
     def vertex_distance(self,start_vertex, end_vertex,method='shortest_path'): #faire une classe distance entre les noeuds
 
         if method=='shortest_path':
+            #print('sppppppppppppp')
             try :
                 dist=len(self.smallest_path(start_vertex, end_vertex))-1
             except NoPathException:
                 dist=float('inf')
             return dist
         if method=='weighted_shortest_path':
+            #print('weiiiiiight')
             try :
                 sp=len(self.smallest_path(start_vertex, end_vertex))-1
                 if (start_vertex,end_vertex) in self.dist_dic:
@@ -191,6 +209,7 @@ class Graph(object):
                 elif (end_vertex,start_vertex) in self.dist_dic:
                     d=self.dist_dic[(end_vertex,start_vertex)]
                 else :
+                    print('EROOOOOOOOOOR')
                     d=np.nan
                 maxd=self.max_attr_distance
                 dist=sp*d/maxd
@@ -199,8 +218,8 @@ class Graph(object):
             return dist
 
 
-    def distance_matrix(self,nodeOfInterest=None,method='shortest_path',changeInf=True,maxvaluemulti=10,force_recompute=False):
-
+    def distance_matrix(self,nodeOfInterest=None,method='shortest_path',changeInf=True,maxvaluemulti=10,force_recompute=False): # Ca ne va pas 
+        start=time.time()
         if (self.C is None) or force_recompute:
 
             if nodeOfInterest==None :
@@ -212,6 +231,7 @@ class Graph(object):
             pairs = list(itertools.combinations(v,2))
             C=np.zeros((len(v),len(v)))
             if method=='weighted_shortest_path':
+                #print('GOOOOOOOOO')
                 start2=time.time()
                 self.all_attribute_distance(nodeOfInterest)
                 end2=time.time()
@@ -227,7 +247,9 @@ class Graph(object):
 
             for (s,e) in pairs: # cette boucle est longue : OUI
                 distance=self.vertex_distance(s,e,method=method)
-                C[self.inv_map_node[s]-1,self.inv_map_node[e]-1]=distance
+                #C[self.inv_map_node[s]-1,self.inv_map_node[e]-1]=distance
+                C[self.inv_map_node[s],self.inv_map_node[e]]=distance
+
 
             endboucle=time.time()
             self.log['pertoperdistance'].append(endboucle-startboucle)
@@ -235,21 +257,41 @@ class Graph(object):
             C=C+C.T
 
             if changeInf==True:
-                C[C==float('inf')]=maxvaluemulti*np.max(C) # à voir
-
+                C[C==float('inf')]=maxvaluemulti*np.max(C[C!=float('inf')]) # à voir
+            if np.max(C)!=0:
+                C=C/np.max(C)
             self.C=C
             self.name_struct_dist=method
             #print('recompute ')
-
+            #print('yeah')
+            end=time.time()
+            #print('time distance_matrix : ',1000*(end-start))
             return self.C
 
         else :
+            end=time.time()
+            #print('time distance_matrix : ',1000*(end-start))
 
             #print('no compute ')
             #print('selfC',self.C)
-
             return self.C
 
+    def leaves_matrix_attr(self):
+        leaves=self.return_leaves(self.tree)
+        d=dict((k, v) for k, v in self.nx_graph.node.items() if k in set(leaves))
+        x=[]
+        for k,v in d.items():
+            x.append(v['attr_name'])
+
+        return np.array(x)
+
+    def all_matrix_attr(self):
+        d=dict((k, v) for k, v in self.nx_graph.node.items())
+        x=[]
+        for k,v in d.items():
+            x.append(v['attr_name'])
+
+        return np.array(x)
             
 
     def display_graph(self,**kwargs):
@@ -333,22 +375,7 @@ class Graph(object):
     def construct_tree(self):
         self.tree=nx.bfs_tree(self.nx_graph, 1) #create trees
 
-    def leaves_matrix_attr(self):
-        leaves=self.return_leaves(self.tree)
-        d=dict((k, v) for k, v in self.nx_graph.node.items() if k in set(leaves))
-        x=[]
-        for k,v in d.items():
-            x.append(v['attr_name'])
 
-        return np.array(x)
-
-    def all_matrix_attr(self):
-        d=dict((k, v) for k, v in self.nx_graph.node.items())
-        x=[]
-        for k,v in d.items():
-            x.append(v['attr_name'])
-
-        return np.array(x)
 
 
 class NoPathException(Exception):
@@ -568,6 +595,25 @@ def build_MUTAG_dataset(path):
         data.append((g,i[1]))
 
     return data
+
+def build_PTC_dataset(path):
+    graphs=graph_label_list(path,'PTC_MR_graph_labels.txt')
+    adjency=compute_adjency(path,'PTC_MR_A.txt')
+    data_dict=graph_indicator(path,'PTC_MR_graph_indicator.txt')
+    node_dic=node_labels_dic(path,'PTC_MR_node_labels.txt') # ya aussi des nodes attributes ! The fuck ?
+    data=[]
+    for i in graphs:
+        g=Graph()
+        for node in data_dict[i[0]]:
+            g.name=i[0]
+            g.add_vertex(node)
+            g.add_one_attribute(node,node_dic[node])
+            for node2 in adjency[node]:
+                g.add_edge((node,node2))
+        data.append((g,i[1]))
+
+    return data
+
 
 def build_ENZYMES_dataset(path):
     graphs=graph_label_list(path,'ENZYMES_graph_labels.txt')

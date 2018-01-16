@@ -1,0 +1,124 @@
+INFO:root:-----------Begin fit-----------
+INFO:root:----------CALCULS DES MATRICES DE DISTANCE---------------
+INFO:root:Time calc_distance  : 6.666330099105835
+INFO:root:---------- FIN CALCULS DES MATRICES DE DISTANCE---------------
+INFO:root:----------DEBUT VALIDATION CROISEE---------------
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 1.121737003326416
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 1.376633882522583
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 1.2295479774475098
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 1.1183109283447266
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 1.0259900093078613
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:----------FIN VALIDATION CROISEE---------------
+INFO:root:VALIDATION CROISEE TIME : 5.878824949264526
+INFO:root:-----------End fit-----------
+INFO:root:ALL TIME : --- 12.552927017211914 seconds ---
+INFO:root:-----------Begin fit-----------
+INFO:root:----------CALCULS DES MATRICES DE DISTANCE---------------
+INFO:root:Time calc_distance  : 5.1393749713897705
+INFO:root:---------- FIN CALCULS DES MATRICES DE DISTANCE---------------
+INFO:root:----------DEBUT VALIDATION CROISEE---------------
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 0.9211428165435791
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 0.8918581008911133
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 0.9505641460418701
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 0.9075720310211182
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 0.9432981014251709
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:----------FIN VALIDATION CROISEE---------------
+INFO:root:VALIDATION CROISEE TIME : 4.618743896484375
+INFO:root:-----------End fit-----------
+INFO:root:ALL TIME : --- 9.763347864151001 seconds ---
+INFO:root:-----------Begin fit-----------
+INFO:root:----------CALCULS DES MATRICES DE DISTANCE---------------
+INFO:root:Time calc_distance  : 5.3374598026275635
+INFO:root:---------- FIN CALCULS DES MATRICES DE DISTANCE---------------
+INFO:root:----------DEBUT VALIDATION CROISEE---------------
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 1.2607901096343994
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 1.0862019062042236
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 1.0063159465789795
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 0.9136080741882324
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 1.0783131122589111
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:----------FIN VALIDATION CROISEE---------------
+INFO:root:VALIDATION CROISEE TIME : 5.351001024246216
+INFO:root:-----------End fit-----------
+INFO:root:ALL TIME : --- 10.692490816116333 seconds ---
+INFO:root:---------------------------- 
+INFO:root:Fit best estimator on train 
+INFO:root:TIME FIT 6.248159170150757
+INFO:root:TIME PREDICT 12.44046401977539
+INFO:root:-----------Begin fit-----------
+INFO:root:----------CALCULS DES MATRICES DE DISTANCE---------------
+INFO:root:Time calc_distance  : 5.849441051483154
+INFO:root:---------- FIN CALCULS DES MATRICES DE DISTANCE---------------
+INFO:root:----------DEBUT VALIDATION CROISEE---------------
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 0.9524919986724854
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 1.0437591075897217
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 1.0509979724884033
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 0.9591929912567139
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:---------
+INFO:root:TIME FOR ONE FOLD FOR ALL PARAMS: 0.935405969619751
+INFO:root:---------
+INFO:root:########## ONE FOLD DONE ###############
+INFO:root:----------FIN VALIDATION CROISEE---------------
+INFO:root:VALIDATION CROISEE TIME : 4.946431875228882
+INFO:root:-----------End fit-----------
+INFO:root:ALL TIME : --- 10.800644874572754 seconds ---
+INFO:root:---------------------------- 
+INFO:root:Fit best estimator on train 
+INFO:root:TIME FIT 5.4253990650177
+INFO:root:TIME PREDICT 10.611368894577026

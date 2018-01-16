@@ -54,15 +54,24 @@ def wgw(G, C1, C2, p, q, loss_fun, epsilon,alpha,
     log_struct={}
     log_struct['err']=[]
     log_struct['GW_dist']=[]
+    log_struct['tens']=[]
     log_struct['sinkhorn']=[]
     log_struct['cpt']=0
     log_struct['const']=end-start
 
     while (err > tol and cpt < max_iter):
-        tens = constC-np.dot(hC1, T).dot(hC2.T)
-        Cost = G+alpha*tens
+        A=-np.dot(hC1, T).dot(hC2.T)
+        tens = constC+A
+        log_struct['tens'].append(tens)
+        B=alpha*tens
+        if alpha==0:
+            Cost = G
+        elif alpha==1:
+            Cost=tens
+        else:
+            Cost=G+B
         start=time.time()        
-        T = ot.sinkhorn(p, q, Cost, epsilon, numItermax=100)
+        T = ot.sinkhorn(p, q, Cost, epsilon,numItermax=500)
         end=time.time()
         log_struct['sinkhorn'].append(end-start)
 

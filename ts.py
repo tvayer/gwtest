@@ -19,31 +19,36 @@ class TS(object):
 
     def __eq__(self, other) : 
         #print('yo method')
-        return self.__dict__ == other.__dict__
+        return (self.values == other.values) and (self.times == other.times)
 
     def __hash__(self):
         return hash(str(self))
+
+    def characterized(self):
+        if self.name!='A ts as no name':
+            return self.name
+        else:
+            return self
 
     def plot_ts(self,show=False,**kwargs):
         pl.plot(self.values,**kwargs)
         if show==True:
            pl.show()
 
-    def distance_matrix(self,method='time',timedistance='sqeuclidean',force_recompute=False):
+    def distance_matrix(self,method='sqeuclidean',force_recompute=False):
 
         if (self.C is None) or force_recompute:
 
-            if method=='time':
-                if timedistance=='dirac':
-                    f=lambda x,y: x==y
-                    C = ot.dist(np.array(self.times).reshape(-1,1),np.array(self.times).reshape(-1,1),f)
-                else :
-                    C  = ot.dist(np.array(self.times).reshape(-1,1),np.array(self.times).reshape(-1,1),timedistance)
-                self.C = C/np.max(C)
+            if method=='dirac':
+                f=lambda x,y: x!=y
+                C = ot.dist(np.array(self.times).reshape(-1,1),np.array(self.times).reshape(-1,1),f)
+            else :
+                C  = ot.dist(np.array(self.times).reshape(-1,1),np.array(self.times).reshape(-1,1),method)
+            self.C = C/np.max(C)
 
-                self.name_struct_dist=method
+            self.name_struct_dist=method
 
-                return self.C
+            return self.C
 
         else :
             return self.C

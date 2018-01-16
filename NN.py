@@ -84,6 +84,11 @@ class Generic1NNClassifier(KNeighborsClassifier,TransformerMixin):
         self.similarities=S
         return numpy.array(pred)
 
+    def set_one_param(self,dicto,key):
+        if key in dicto:
+            setattr(self, key, dicto[key])
+
+
     def transform(self,X):     
         return self.predict(X)[0]
     
@@ -91,9 +96,9 @@ class Generic1NNClassifier(KNeighborsClassifier,TransformerMixin):
         return {"the_lower_the_better": self.the_lower_the_better,"similarity_measure":self.similarity_measure,"parallel":self.parallel}
 
     def set_params(self, **parameters):
-        self.the_lower_the_better = parameters["the_lower_the_better"]
-        self.similarity_measure=parameters["similarity_measure"]
-        self.parallel=parameters["parallel"]
+        self.set_one_param(parameters,"the_lower_the_better")
+        self.set_one_param(parameters,"similarity_measure")
+        self.set_one_param(parameters,"parallel")
         return self
 
 """"""""""""""""""""""""""""""""""""
@@ -111,7 +116,7 @@ class Graph_EMD_1NN_Classifier(Generic1NNClassifier):
 
     def set_params(self, **parameters):
         self.features_metric = parameters["features_metric"]
-        wd=Wasserstein_distance(features_metric)
+        wd=Wasserstein_distance(self.features_metric)
         self.similarity_measure=wd.graph_d
         self.similarities_dict=dict()
 
@@ -146,7 +151,7 @@ class Ts_EMD_1NN_Classifier(Generic1NNClassifier):
         return {"features_metric":self.features_metric}
 
     def set_params(self, **parameters):
-        self.features_metric = parameters["features_metric"]
+        self.set_one_param(parameters,"features_metric")
         wd=Wasserstein_distance(self.features_metric)
         self.similarity_measure=wd.ts_d
         self.similarities_dict=dict()
@@ -234,14 +239,15 @@ class Normalized_1NN_Classifier(Generic1NNClassifier):
 
 class Tree_WGW_1NN_Classifier(Normalized_1NN_Classifier):
 
-    def __init__(self,alpha=1,epsilon=1,method='shortest_path',features_metric='sqeuclidean',the_lower_the_better=True
+    def __init__(self,alpha=1,epsilon=1,ratio=None,method='shortest_path',features_metric='sqeuclidean',the_lower_the_better=True
         ,parallel=False,verbose=False,normalize_distance=False):
-        self.gw=Gromov_Wasserstein_distance(alpha=alpha,epsilon=epsilon,method=method,features_metric=features_metric)
-        similarity_measure=gw.tree_d
+        self.gw=Gromov_Wasserstein_distance(alpha=alpha,epsilon=epsilon,method=method,features_metric=features_metric,ratio=ratio)
+        similarity_measure=self.gw.tree_d
         self.alpha=alpha
         self.epsilon=epsilon
         self.features_metric=features_metric
         self.method=method
+        self.ratio=ratio
         Normalized_1NN_Classifier.__init__(self,similarity_measure=similarity_measure
             ,the_lower_the_better=the_lower_the_better,parallel=parallel,verbose=verbose,normalize_distance=normalize_distance)
 
@@ -258,17 +264,16 @@ class Tree_WGW_1NN_Classifier(Normalized_1NN_Classifier):
 
     def get_params(self, deep=True):
         return {"alpha":self.alpha,"epsilon":self.epsilon,"normalize_distance":self.normalize_distance
-        ,"features_metric":self.features_metric,"method":self.method}
+        ,"features_metric":self.features_metric,"method":self.method,'ratio':self.ratio}
 
     def set_params(self, **parameters):
-        self.alpha = parameters["alpha"]
-        self.features_metric = parameters["features_metric"]
-        self.method = parameters["method"]
-        self.epsilon=parameters["epsilon"]
-        self.normalize_distance=parameters["normalize_distance"]
-        gw=Gromov_Wasserstein_distance(alpha=self.alpha,epsilon=self.epsilon,method=self.method,features_metric=self.features_metric)
-        self.similarity_measure=gw.tree_d
-        gw2=Gromov_Wasserstein_distance(alpha=self.alpha,epsilon=self.epsilon,method=self.method,features_metric=self.features_metric,timedistance=self.timedistance)
+        self.set_one_param(parameters,"alpha")
+        self.set_one_param(parameters,"features_metric")
+        self.set_one_param(parameters,"method")
+        self.set_one_param(parameters,"epsilon")
+        self.set_one_param(parameters,"normalize_distance")
+        self.set_one_param(parameters,"ratio")
+        gw2=Gromov_Wasserstein_distance(alpha=self.alpha,epsilon=self.epsilon,ratio=self.ratio,method=self.method,features_metric=self.features_metric,timedistance=self.timedistance)
         if self.gw.get_tuning_params()!=gw2.get_tuning_params():
             self.gw=gw2
             self.similarity_measure=gw2.graph_d
@@ -279,14 +284,15 @@ class Tree_WGW_1NN_Classifier(Normalized_1NN_Classifier):
 
 class Graph_WGW_1NN_Classifier(Normalized_1NN_Classifier):
 
-    def __init__(self,alpha=1,epsilon=1,method='shortest_path',features_metric='sqeuclidean',the_lower_the_better=True
+    def __init__(self,alpha=1,epsilon=1,ratio=None,method='shortest_path',features_metric='sqeuclidean',the_lower_the_better=True
         ,parallel=False,verbose=False,normalize_distance=False):
-        self.gw=Gromov_Wasserstein_distance(alpha=alpha,epsilon=epsilon,method=method,features_metric=features_metric)
+        self.gw=Gromov_Wasserstein_distance(alpha=alpha,epsilon=epsilon,ratio=ratio,method=method,features_metric=features_metric)
         similarity_measure=self.gw.graph_d
         self.alpha=alpha
         self.epsilon=epsilon
         self.features_metric=features_metric
         self.method=method
+        self.ratio=ratio
         Normalized_1NN_Classifier.__init__(self,similarity_measure=similarity_measure
             ,the_lower_the_better=the_lower_the_better,parallel=parallel,verbose=verbose,normalize_distance=normalize_distance)
 
@@ -302,17 +308,16 @@ class Graph_WGW_1NN_Classifier(Normalized_1NN_Classifier):
 
     def get_params(self, deep=True):
         return {"alpha":self.alpha,"epsilon":self.epsilon,"normalize_distance":self.normalize_distance
-        ,"features_metric":self.features_metric,"method":self.method}
+        ,"features_metric":self.features_metric,"method":self.method,"ratio":self.ratio}
 
     def set_params(self, **parameters):
-        self.alpha = parameters["alpha"]
-        self.features_metric = parameters["features_metric"]
-        self.method = parameters["method"]
-        self.epsilon=parameters["epsilon"]
-        self.normalize_distance=parameters["normalize_distance"]
-        gw=Gromov_Wasserstein_distance(alpha=self.alpha,epsilon=self.epsilon,method=self.method,features_metric=self.features_metric)
-        self.similarity_measure=gw.graph_d
-        gw2=Gromov_Wasserstein_distance(alpha=self.alpha,epsilon=self.epsilon,method=self.method,features_metric=self.features_metric,timedistance=self.timedistance)
+        self.set_one_param(parameters,"alpha")
+        self.set_one_param(parameters,"features_metric")
+        self.set_one_param(parameters,"method")
+        self.set_one_param(parameters,"epsilon")
+        self.set_one_param(parameters,"normalize_distance")
+        self.set_one_param(parameters,"ratio")
+        gw2=Gromov_Wasserstein_distance(alpha=self.alpha,epsilon=self.epsilon,method=self.method,features_metric=self.features_metric,ratio=self.ratio)
         if self.gw.get_tuning_params()!=gw2.get_tuning_params():
             self.gw=gw2
             self.similarity_measure=gw2.graph_d
@@ -322,14 +327,15 @@ class Graph_WGW_1NN_Classifier(Normalized_1NN_Classifier):
 
 class Ts_WGW_1NN_Classifier(Normalized_1NN_Classifier):
 
-    def __init__(self,alpha=1,epsilon=1,method='time',features_metric='sqeuclidean',timedistance='sqeuclidean',the_lower_the_better=True
+    def __init__(self,alpha=1,epsilon=1,ratio=None,method='time',features_metric='sqeuclidean',timedistance='sqeuclidean',the_lower_the_better=True
         ,parallel=False,verbose=False,normalize_distance=False):
-        self.gw=Gromov_Wasserstein_distance(alpha=alpha,epsilon=epsilon,method=method,features_metric=features_metric,timedistance=timedistance)
+        self.gw=Gromov_Wasserstein_distance(alpha=alpha,epsilon=epsilon,ratio=ratio,method=method,features_metric=features_metric,timedistance=timedistance)
         similarity_measure=self.gw.ts_d
         self.alpha=alpha
         self.epsilon=epsilon
         self.features_metric=features_metric
         self.method=method
+        self.ratio=ratio
         self.timedistance=timedistance
         Normalized_1NN_Classifier.__init__(self,similarity_measure=similarity_measure
             ,the_lower_the_better=the_lower_the_better,parallel=parallel,verbose=verbose,normalize_distance=normalize_distance)
@@ -346,22 +352,113 @@ class Ts_WGW_1NN_Classifier(Normalized_1NN_Classifier):
 
     def get_params(self, deep=True):
         return {"alpha":self.alpha,"epsilon":self.epsilon,"normalize_distance":self.normalize_distance
-        ,"features_metric":self.features_metric,"method":self.method,"timedistance":self.timedistance}
+        ,"features_metric":self.features_metric,"method":self.method,"timedistance":self.timedistance,"ratio":self.ratio}
 
     def set_params(self, **parameters):
-        self.alpha = parameters["alpha"]
-        self.features_metric = parameters["features_metric"]
-        self.method = parameters["method"]
-        self.epsilon=parameters["epsilon"]
-        self.normalize_distance=parameters["normalize_distance"]
-        self.timedistance=parameters["timedistance"]
-        gw2=Gromov_Wasserstein_distance(alpha=self.alpha,epsilon=self.epsilon,method=self.method,features_metric=self.features_metric,timedistance=self.timedistance)
+        self.set_one_param(parameters,"alpha")
+        self.set_one_param(parameters,"features_metric")
+        self.set_one_param(parameters,"method")
+        self.set_one_param(parameters,"epsilon")
+        self.set_one_param(parameters,"normalize_distance")
+        self.set_one_param(parameters,"timedistance")
+        self.set_one_param(parameters,"ratio")
+        gw2=Gromov_Wasserstein_distance(alpha=self.alpha,epsilon=self.epsilon,method=self.method,features_metric=self.features_metric,timedistance=self.timedistance,ratio=self.ratio)
         if self.gw.get_tuning_params()!=gw2.get_tuning_params():
             self.gw=gw2
             self.similarity_measure=gw2.graph_d
             self.similarities_dict=dict()
 
         return self
+
+""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""
+
+
+class WGW_Classifier(Generic1NNClassifier):
+
+    def __init__(self,alpha=1,epsilon=1,name='graph',method='shortest_path',features_metric='sqeuclidean',the_lower_the_better=True
+        ,parallel=False,verbose=False,normalize_distance=False):
+
+        self.gw=Gromov_Wasserstein_distance(alpha=1,epsilon=epsilon,method=method,features_metric=features_metric)
+        self.emd=Wasserstein_distance(features_metric=features_metric)
+        self.name=name
+
+        if self.name=='graph':
+            self.similarity_measure_gw=self.gw.graph_d
+            self.similarity_measure_emd=self.emd.graph_d
+        if self.name=='time_series':
+            self.similarity_measure_gw=self.gw.ts_d
+            self.similarity_measure_emd=self.emd.ts_d
+        if self.name=='tree':
+            self.similarity_measure_gw=self.gw.tree_d
+            self.similarity_measure_emd=self.emd.tree_d
+
+        self.alpha=alpha
+        self.epsilon=epsilon
+        self.features_metric=features_metric
+        self.method=method
+        self.gromov=Normalized_1NN_Classifier(similarity_measure=self.similarity_measure_gw
+            ,the_lower_the_better=the_lower_the_better,parallel=parallel,verbose=verbose,normalize_distance=normalize_distance)
+
+        Generic1NNClassifier.__init__(self,similarity_measure=self.combine,the_lower_the_better=the_lower_the_better,parallel=parallel,verbose=verbose)
+
+    def combine(self,x,y):
+        a=self.gromov.compute_similarity(x,y)
+        b=self.similarity_measure_emd(x,y)
+        #print(a)
+        #print(b)
+        return self.alpha*a+b
+
+
+    def fit(self,X,y=None):
+        self.classes_ = y
+        self._fit_X = list(X.reshape(X.shape[0],)) 
+        print('Construction des matrices de structures')
+        for x in self._fit_X :
+            if x.C is None or x.name_struct_dist!=self.method:
+                C=x.distance_matrix(method=self.method,force_recompute=True)
+
+        super(WGW_Classifier,self).fit(X,y)
+
+    def get_params(self, deep=True):
+        return {"alpha":self.alpha,"epsilon":self.epsilon,"normalize_distance":self.normalize_distance
+        ,"features_metric":self.features_metric,"method":self.method}
+
+    def set_params(self, **parameters):
+        self.set_one_param(parameters,"alpha")
+        self.set_one_param(parameters,"features_metric")
+        self.set_one_param(parameters,"method")
+        self.set_one_param(parameters,"epsilon")
+        self.set_one_param(parameters,"normalize_distance")
+        gw2=Gromov_Wasserstein_distance(alpha=1,epsilon=self.epsilon,method=self.method,features_metric=self.features_metric)
+        emd2=Wasserstein_distance(features_metric=self.features_metric)
+
+        if self.gw.get_tuning_params()!=gw2.get_tuning_params():
+            self.gw=gw2
+            self.emd=emd2
+            if self.name=='graph':
+                self.similarity_measure_gw=self.gw.graph_d
+                self.similarity_measure_emd=self.emd.graph_d
+            if self.name=='time_series':
+                self.similarity_measure_gw=self.gw.ts_d
+                self.similarity_measure_emd=self.emd.ts_d
+            if self.name=='tree':
+                self.similarity_measure_gw=self.gw.tree_d
+                self.similarity_measure_emd=self.emd.tree_d
+            self.similarity_measure=self.combine # pas besoin
+            self.similarities_dict=dict()
+
+        return self
+
+
+
+
+
+
+
+
+
+
 
 
 

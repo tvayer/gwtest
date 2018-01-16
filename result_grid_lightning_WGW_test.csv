@@ -1,5 +1,0 @@
-CV Nb_splits :  5
-Data train size :  50
-Data test size :  50
-N_jobs :  1
-Tuned tuned_parameters :  [{'method': ['time'], 'epsilon': [15.0], 'normalize_distance': [True], 'timedistance': ['sqeuclidean']}]
